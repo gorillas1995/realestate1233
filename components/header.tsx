@@ -48,7 +48,7 @@ export function Header() {
             style={{ minWidth: 0 }}
           >
             <span className="text-xl lg:text-2xl font-bold tracking-tight text-black whitespace-nowrap">
-              SITGES
+              SITGES CAPITAL
             </span>
           </Link>
 
