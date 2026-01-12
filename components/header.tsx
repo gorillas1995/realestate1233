@@ -1,9 +1,9 @@
-"use client"
+"use client";
 
-import Link from "next/link"
-import { usePathname } from "next/navigation"
-import { useState, useEffect } from "react"
-import { Menu, X, ArrowRight } from "lucide-react"
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { useState, useEffect } from "react";
+import { Menu, X, ArrowRight } from "lucide-react";
 
 const navLinks = [
   { href: "/", label: "HOME" },
@@ -11,40 +11,49 @@ const navLinks = [
   { href: "/gallery", label: "GALLERY" },
   { href: "/about", label: "ABOUT" },
   { href: "/contact", label: "CONTACT" },
-]
+];
 
 export function Header() {
-  const pathname = usePathname()
-  const [isScrolled, setIsScrolled] = useState(false)
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
+  const pathname = usePathname();
+  const [isScrolled, setIsScrolled] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 50)
-    }
-    window.addEventListener("scroll", handleScroll)
-    return () => window.removeEventListener("scroll", handleScroll)
-  }, [])
+      setIsScrolled(window.scrollY > 50);
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   useEffect(() => {
-    setIsMobileMenuOpen(false)
-  }, [pathname])
+    setIsMobileMenuOpen(false);
+  }, [pathname]);
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 transition-all duration-500">
+    <header className="fixed top-0 left-0 right-0 z-50 transition-all duration-500 bg-transparent">
       <div className="container mx-auto px-4 lg:px-8 pt-4 lg:pt-6">
-        <nav className="flex items-center justify-between">
-          {/* Logo - Left */}
-          <Link href="/" className="flex items-center gap-2 group z-10">
-            <span className="text-lg font-bold tracking-tight text-foreground">[URBAN]</span>
+        {/* Combined Card for Logo and Navbar */}
+        <div
+          className={`flex items-center mx-auto rounded-2xl shadow-lg transition-all duration-500 ${
+            isScrolled
+              ? "bg-white/95 backdrop-blur-md"
+              : "bg-secondary/80 backdrop-blur-sm"
+          } px-4 lg:px-8 py-2`}
+        >
+          {/* Logo - Large and Left */}
+          <Link
+            href="/"
+            className="flex-shrink-0 flex items-center gap-2 group z-10 px-4 py-2"
+            style={{ minWidth: 0 }}
+          >
+            <span className="text-xl lg:text-2xl font-bold tracking-tight text-black whitespace-nowrap">
+              SITGES CAPITAL ESTATE
+            </span>
           </Link>
 
-          {/* Desktop Navigation - Centered compact pill */}
-          <div
-            className={`hidden lg:flex items-center gap-1 px-2 py-2 rounded-full transition-all duration-300 ${
-              isScrolled ? "bg-white/95 backdrop-blur-md shadow-lg" : "bg-secondary/80 backdrop-blur-sm"
-            }`}
-          >
+          {/* Navbar - Centered, flows right alongside logo */}
+          <div className="hidden lg:flex items-center gap-1 flex-1 justify-center min-w-0 px-2">
             {navLinks.map((link) => (
               <Link
                 key={link.href}
@@ -60,25 +69,31 @@ export function Header() {
             ))}
           </div>
 
-          {/* Right side spacer for balance */}
+          {/* Right-side placeholder for spacing/balance on desktop, will be hidden on mobile */}
           <div className="hidden lg:block w-[80px]" />
 
-          {/* Mobile Menu Button */}
+          {/* Mobile Menu Button, floats right */}
           <button
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            className="lg:hidden p-2 text-foreground flex items-center gap-2 z-10"
+            className="lg:hidden ml-auto p-2 text-foreground flex items-center gap-2 z-10"
             aria-label="Toggle menu"
           >
-            <span className="text-sm font-medium">MENU</span>
-            {isMobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+            <span className="text-sm font-medium text-black">MENU</span>
+            {isMobileMenuOpen ? (
+              <X className="w-5 h-5" />
+            ) : (
+              <Menu className="w-5 h-5" />
+            )}
           </button>
-        </nav>
+        </div>
       </div>
 
       {/* Mobile Menu */}
       <div
         className={`lg:hidden fixed inset-0 bg-white z-40 transition-all duration-500 ${
-          isMobileMenuOpen ? "opacity-100 visible" : "opacity-0 invisible pointer-events-none"
+          isMobileMenuOpen
+            ? "opacity-100 visible"
+            : "opacity-0 invisible pointer-events-none"
         }`}
       >
         <div className="container mx-auto px-6 pt-24 pb-8">
@@ -93,7 +108,9 @@ export function Header() {
                 style={{
                   transitionDelay: isMobileMenuOpen ? `${index * 75}ms` : "0ms",
                   opacity: isMobileMenuOpen ? 1 : 0,
-                  transform: isMobileMenuOpen ? "translateY(0)" : "translateY(20px)",
+                  transform: isMobileMenuOpen
+                    ? "translateY(0)"
+                    : "translateY(20px)",
                 }}
               >
                 {link.label}
@@ -104,5 +121,5 @@ export function Header() {
         </div>
       </div>
     </header>
-  )
+  );
 }

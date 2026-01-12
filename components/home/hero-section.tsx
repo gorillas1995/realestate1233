@@ -1,7 +1,6 @@
 "use client";
 
 import Link from "next/link";
-import Image from "next/image";
 import { ArrowRight } from "lucide-react";
 import { useEffect, useState } from "react";
 
@@ -14,26 +13,39 @@ export function HeroSection() {
 
   return (
     <section className="min-h-screen flex items-center justify-center">
-      {/* 5% outer spacing */}
+      {/* 0.5% outer spacing */}
       <div className="w-full h-screen px-[0.5vw] py-[0.5vh]">
         <div
           className={`relative w-full h-full rounded-[2.5rem] overflow-hidden transition-all duration-1000 ${
             isLoaded ? "opacity-100 scale-100" : "opacity-0 scale-95"
           }`}
         >
-          {/* Background Image */}
-          <Image
-            src="/placeholder.svg?height=1200&width=2000"
-            alt="Luxury mansion"
-            fill
-            className="object-cover object-center"
-            priority
+          {/* ================= VIDEO BACKGROUND ================= */}
+
+          {/* Desktop video */}
+          <video
+            className="hidden md:block absolute inset-0 w-full h-full object-cover"
+            src="/hero-dessktop.mp4"
+            autoPlay
+            muted
+            loop
+            playsInline
+          />
+
+          {/* Mobile video */}
+          <video
+            className="block md:hidden absolute inset-0 w-full h-full object-cover"
+            src="/hero-mobile.mp4"
+            autoPlay
+            muted
+            loop
+            playsInline
           />
 
           {/* Overlay */}
           <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/40 to-transparent" />
 
-          {/* Content */}
+          {/* ================= CONTENT ================= */}
           <div className="absolute inset-0 flex items-center">
             <div className="px-6 sm:px-10 lg:px-16 max-w-xl">
               <h1

@@ -36,7 +36,7 @@ export function CTASection() {
         <div className="relative overflow-hidden rounded-3xl lg:rounded-2xl w-full max-w-7xl mx-auto lg:max-w-none">
           <div className="relative aspect-[16/6] lg:aspect-[16/3] w-full">
             <Image
-              src="/placeholder.svg?height=500&width=1600"
+              src="/img-banner2.avif"
               alt="Luxury lifestyle"
               fill
               className="object-cover"

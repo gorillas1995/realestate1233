@@ -3,8 +3,32 @@
 import Link from "next/link";
 import Image from "next/image";
 import { ArrowRight } from "lucide-react";
-import { properties } from "@/lib/data";
 import { useEffect, useRef, useState } from "react";
+
+// Use ONLY hardcoded featured properties
+const featuredProperties = [
+  {
+    id: "house1",
+    slug: "modern-villa-seaview",
+    title: "Modern Villa with Sea View",
+    price: "€2,350,000",
+    image: "/house1.jpeg",
+  },
+  {
+    id: "house2",
+    slug: "cozy-country-house",
+    title: "Cozy Country House",
+    price: "€970,000",
+    image: "/house2.jpeg",
+  },
+  {
+    id: "house3",
+    slug: "luxury-city-apartment",
+    title: "Luxury City Apartment",
+    price: "€1,550,000",
+    image: "/house3.jpeg",
+  },
+];
 
 export function FeaturedListings() {
   const [isVisible, setIsVisible] = useState(false);
@@ -62,7 +86,7 @@ export function FeaturedListings() {
             isVisible ? "animate-pop-in" : "opacity-0"
           }`}
         >
-          {properties.slice(0, 9).map((property, index) => (
+          {featuredProperties.map((property, index) => (
             <Link
               key={property.id}
               href={`/property/${property.slug}`}
@@ -71,7 +95,7 @@ export function FeaturedListings() {
             >
               <div className="relative aspect-6/7">
                 <Image
-                  src={property.image || "/placeholder.svg"}
+                  src={property.image}
                   alt={property.title}
                   fill
                   className="object-cover transition-transform duration-700 group-hover:scale-105"
