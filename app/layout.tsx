@@ -5,6 +5,8 @@ import { Analytics } from "@vercel/analytics/next"
 import { Header } from "@/components/header"
 import { Footer } from "@/components/footer"
 import { ScrollToTop } from "@/components/scroll-to-top"
+import { LanguageProvider } from "@/contexts/language-context"
+import { LanguageSwitcher } from "@/components/language-switcher"
 import "./globals.css"
 
 // Inter font configuration - optimized for performance with Next.js font optimization
@@ -29,11 +31,14 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${inter.variable} font-sans antialiased bg-white text-foreground`}>
-        <ScrollToTop />
-        <Header />
-        <main className="min-h-screen">{children}</main>
-        <Footer />
-        <Analytics />
+        <LanguageProvider>
+          <ScrollToTop />
+          <LanguageSwitcher />
+          <Header />
+          <main className="min-h-screen">{children}</main>
+          <Footer />
+          <Analytics />
+        </LanguageProvider>
       </body>
     </html>
   )

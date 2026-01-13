@@ -2,37 +2,35 @@
 
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
-
-const categories = [
-  {
-    title: "HOUSES",
-    description:
-      "Explore architect-designed homes defined by distinctive geometry, zero-threshold living, and seamless indoor-outdoor transitions. Each residence features porcelain stoneware exteriors, motorized sliding glazing, heated pools with linear lighting, and advanced climate systems engineered for exceptional comfort.",
-    images: ["/house1.jpeg", "/house2.jpeg", "/house3.jpeg"],
-  },
-  {
-    title: "INTERIOR DESIGN",
-    description:
-      "Designed for clients who value precision, comfort, and material excellence. These homes integrate underfloor heating, perimeter air-conditioning, CORIAN sanitary finishes, recessed magnetic lighting systems, and fully automated shading for a refined, hotel-level living experience.",
-    images: ["/house1.jpeg", "/house2.jpeg", "/house3.jpeg"],
-  },
-  {
-    title: "HIGH END",
-    description:
-      "Designed for clients who value precision, comfort, and material excellence. These homes integrate underfloor heating, perimeter air-conditioning, CORIAN sanitary finishes, recessed magnetic lighting systems, and fully automated shading for a refined, hotel-level living experience.",
-    images: ["/canapea.jpg", "/canapea-fata.jpg", "/canapea-profil.jpg"],
-  },
-  {
-    title: "EXCLUSIVE ONLY",
-    description:
-      "A limited collection of ultra-exclusive residences offering advanced smart access systems, pivot entrance doors, illuminated glass balustrades, integrated audio, and a fully curated architectural lighting concept — all delivered as standard, not upgrades.",
-    images: ["/place11.jpeg", "/place12.jpeg", "/place13.jpeg"],
-  },
-];
+import { useLanguage } from "@/contexts/language-context";
 
 export function CategoriesSection() {
+  const { t } = useLanguage();
   const [isVisible, setIsVisible] = useState(false);
   const sectionRef = useRef<HTMLElement>(null);
+
+  const categories = [
+    {
+      title: t.categoryData.houses.title,
+      description: t.categoryData.houses.description,
+      images: ["/house1.jpeg", "/house2.jpeg", "/house3.jpeg"],
+    },
+    {
+      title: t.categoryData.interiorDesign.title,
+      description: t.categoryData.interiorDesign.description,
+      images: ["/house1.jpeg", "/house2.jpeg", "/house3.jpeg"],
+    },
+    {
+      title: t.categoryData.highEnd.title,
+      description: t.categoryData.highEnd.description,
+      images: ["/canapea.jpg", "/canapea-fata.jpg", "/canapea-profil.jpg"],
+    },
+    {
+      title: t.categoryData.exclusiveOnly.title,
+      description: t.categoryData.exclusiveOnly.description,
+      images: ["/place11.jpeg", "/place12.jpeg", "/place13.jpeg"],
+    },
+  ];
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -58,15 +56,13 @@ export function CategoriesSection() {
           <div className="flex flex-col md:flex-row md:items-center md:justify-between px-6 py-10 gap-6">
             <div className="flex-1 space-y-3">
               <span className="text-sm font-semibold tracking-[0.25em] uppercase text-white block">
-                About Us
+                {t.categories.aboutUs}
               </span>
               <h3 className="text-2xl md:text-3xl lg:text-4xl font-bold text-white leading-tight">
-                Precision. Innovation. Quality.
+                {t.categories.heading}
               </h3>
               <p className="text-white  leading-relaxed max-w-2xl">
-                We blend cutting-edge technology with meticulous craftsmanship
-                to deliver iconic properties that stand the test of time.
-                Trusted by clients worldwide.
+                {t.categories.aboutDescription}
               </p>
             </div>
           </div>
@@ -83,11 +79,11 @@ export function CategoriesSection() {
             }`}
           >
             <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-foreground leading-tight">
-              Discover our most beautiful properties in Town
+              {t.categories.title}
             </h2>
 
             <p className="text-muted-foreground text-lg max-w-md">
-              Discover the best and beautiful properties in different categories
+              {t.categories.description}
             </p>
           </div>
 

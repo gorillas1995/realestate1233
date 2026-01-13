@@ -3,8 +3,10 @@
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { useEffect, useState } from "react";
+import { useLanguage } from "@/contexts/language-context";
 
 export function HeroSection() {
+  const { t } = useLanguage();
   const [isLoaded, setIsLoaded] = useState(false);
 
   useEffect(() => {
@@ -55,9 +57,9 @@ export function HeroSection() {
                     : "opacity-0 translate-y-8"
                 }`}
               >
-                URBAN CONSTRUCTION
+                {t.hero.title}
                 <br />
-                <span className="text-white/90">FOR CLIENTS</span>
+                <span className="text-white/90">{t.hero.subtitle}</span>
               </h1>
 
               <p
@@ -67,9 +69,7 @@ export function HeroSection() {
                     : "opacity-0 translate-y-8"
                 }`}
               >
-                The urban Estate construction philosophy prioritizes precision,
-                innovation, and quality. It combines cutting-edge technology
-                with meticulous craftsmanship.
+                {t.hero.description}
               </p>
 
               <div
@@ -83,7 +83,7 @@ export function HeroSection() {
                   href="/listings"
                   className="inline-flex items-center gap-3 px-7 py-3.5 bg-white text-foreground font-medium tracking-wide rounded-full transition-all duration-300 hover:bg-white/90 hover:gap-4 hover:shadow-xl group"
                 >
-                  VIEW LISTINGS
+                  {t.hero.cta}
                   <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" />
                 </Link>
               </div>

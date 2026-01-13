@@ -3,6 +3,7 @@
 import { useState, useEffect, useRef, useMemo } from "react";
 import Image from "next/image";
 import { X, ChevronLeft, ChevronRight, ArrowRight } from "lucide-react";
+import { useLanguage } from "@/contexts/language-context";
 
 // Gallery image type with category field
 type GalleryCategory = "all" | "exterior" | "ground-floor" | "upper-floor";
@@ -256,19 +257,20 @@ const galleryImages: GalleryImage[] = [
   },
 ];
 
-// Filter categories configuration
-const categories: { value: GalleryCategory; label: string }[] = [
-  { value: "all", label: "ALL" },
-  { value: "exterior", label: "EXTERIOR" },
-  { value: "ground-floor", label: "GROUND FLOOR" },
-  { value: "upper-floor", label: "UPPER FLOOR" },
-];
-
 export function GalleryGrid() {
+  const { t } = useLanguage();
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
   const [activeCategory, setActiveCategory] = useState<GalleryCategory>("all");
   const [isVisible, setIsVisible] = useState(false);
   const gridRef = useRef<HTMLElement>(null);
+
+  // Filter categories configuration
+  const categories: { value: GalleryCategory; label: string }[] = [
+    { value: "all", label: t.gallery.filters.all },
+    { value: "exterior", label: t.gallery.filters.exterior },
+    { value: "ground-floor", label: t.gallery.filters.groundFloor },
+    { value: "upper-floor", label: t.gallery.filters.upperFloor },
+  ];
 
   // Filter images based on selected category
   const filteredImages = useMemo(() => {

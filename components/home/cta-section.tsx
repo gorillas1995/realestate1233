@@ -4,8 +4,10 @@ import Link from "next/link";
 import Image from "next/image";
 import { ArrowRight } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
+import { useLanguage } from "@/contexts/language-context";
 
 export function CTASection() {
+  const { t } = useLanguage();
   const [isVisible, setIsVisible] = useState(false);
   const sectionRef = useRef<HTMLElement>(null);
 
@@ -49,13 +51,13 @@ export function CTASection() {
           <div className="absolute inset-0 flex items-center justify-center">
             <div className="text-center px-6">
               <h2 className="text-xl md:text-4xl lg:text-5xl font-bold text-white mb-6">
-                CHANGE YOUR LIFESTYLE!
+                {t.cta.title}
               </h2>
               <Link
                 href="/contact"
                 className="inline-flex items-center gap-3 px-8 py-4 bg-white text-foreground font-medium tracking-wide rounded-full transition-all duration-300 hover:bg-white/90 hover:gap-4 hover:shadow-xl group"
               >
-                REACH OUT TO US
+                {t.cta.button}
                 <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" />
               </Link>
             </div>

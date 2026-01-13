@@ -4,19 +4,21 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState, useEffect } from "react";
 import { Menu, X, ArrowRight } from "lucide-react";
-
-const navLinks = [
-  { href: "/", label: "HOME" },
-  { href: "/listings", label: "LISTINGS" },
-  { href: "/gallery", label: "GALLERY" },
-  { href: "/about", label: "ABOUT" },
-  { href: "/contact", label: "CONTACT" },
-];
+import { useLanguage } from "@/contexts/language-context";
 
 export function Header() {
   const pathname = usePathname();
+  const { t } = useLanguage();
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+
+  const navLinks = [
+    { href: "/", label: t.nav.home },
+    { href: "/listings", label: t.nav.listings },
+    { href: "/gallery", label: t.nav.gallery },
+    { href: "/about", label: t.nav.about },
+    { href: "/contact", label: t.nav.contact },
+  ];
 
   useEffect(() => {
     const handleScroll = () => {

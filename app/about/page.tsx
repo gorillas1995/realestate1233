@@ -4,36 +4,35 @@ import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
-
-const philosophies = [
-  {
-    number: "01",
-    title: "PHILOSOPHY",
-    description:
-      "We believe architecture should create a feeling before it creates a form. Our approach is rooted in clarity, light, and spatial comfort — designing homes that feel calm, open, and intentional from the very first step inside.",
-    image: "/house2.jpeg",
-  },
-  {
-    number: "02",
-    title: "CRAFTSMANSHIP",
-    description:
-      "Every material is selected for longevity, tactility, and coherence. From porcelain stoneware façades and CORIAN interiors to integrated lighting and climate systems, nothing is decorative — everything is engineered to last.",
-    image: "/house3.jpeg",
-  },
-  {
-    number: "03",
-    title: "LONG-TERM VISION",
-    description:
-      "We design for how people will live, not for how projects are sold. Our homes are built for comfort, inclusivity, and permanence — places meant to age gracefully and remain relevant long after completion.",
-    image: "/house1.jpeg",
-  },
-];
+import { useLanguage } from "@/contexts/language-context";
 
 export default function AboutPage() {
+  const { t } = useLanguage();
   const [visibleSections, setVisibleSections] = useState<Set<number>>(
     new Set()
   );
   const sectionRefs = useRef<(HTMLElement | null)[]>([]);
+
+  const philosophies = [
+    {
+      number: "01",
+      title: t.philosophies.philosophy.title,
+      description: t.philosophies.philosophy.description,
+      image: "/house2.jpeg",
+    },
+    {
+      number: "02",
+      title: t.philosophies.craftsmanship.title,
+      description: t.philosophies.craftsmanship.description,
+      image: "/house3.jpeg",
+    },
+    {
+      number: "03",
+      title: t.philosophies.longTermVision.title,
+      description: t.philosophies.longTermVision.description,
+      image: "/house1.jpeg",
+    },
+  ];
 
   useEffect(() => {
     // Trigger initial animations
@@ -78,19 +77,16 @@ export default function AboutPage() {
             }`}
           >
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 text-foreground">
-              ABOUT
+              {t.about.title}
             </h1>
             <p className="text-muted-foreground text-lg md:text-xl leading-relaxed mb-8">
-              We develop architect-designed residences defined by light, space,
-              and material honesty. Our focus is not volume, but precision —
-              creating calm, inclusive living environments near the sea, built
-              for long-term comfort rather than short-term trends.
+              {t.about.description}
             </p>
             <Link
               href="/listings"
               className="inline-flex items-center gap-3 px-6 py-3 bg-primary text-white rounded-full hover:bg-primary/90 transition-all duration-300 hover:gap-4 hover:shadow-lg group"
             >
-              VIEW RESIDENCES
+              {t.about.viewResidences}
               <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" />
             </Link>
           </div>

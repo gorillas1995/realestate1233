@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { Star } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
+import { useLanguage } from "@/contexts/language-context";
 
 const testimonials = [
   {
@@ -56,6 +57,7 @@ const testimonials = [
 ];
 
 export function TestimonialsSection() {
+  const { t } = useLanguage();
   const [isVisible, setIsVisible] = useState(false);
   const [page, setPage] = useState(0);
   const sectionRef = useRef<HTMLElement>(null);
@@ -91,17 +93,15 @@ export function TestimonialsSection() {
             }`}
           >
             <span className="text-sm font-semibold tracking-[0.25em] uppercase text-primary block">
-              Discover more of our properties
+              {t.testimonials.label}
             </span>
 
             <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-foreground leading-tight">
-              Checkout our reviews
+              {t.testimonials.title}
             </h2>
 
             <p className="text-muted-foreground text-lg max-w-md">
-              Insights from early buyers, site visitors, and professionals
-              evaluating the architecture, materials, and setting of SITGES
-              CAPITAL Estate
+              {t.testimonials.description}
             </p>
           </div>
 

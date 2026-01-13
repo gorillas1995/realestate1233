@@ -5,8 +5,10 @@ import Image from "next/image";
 import { ArrowRight } from "lucide-react";
 import { stats } from "@/lib/data";
 import { useEffect, useRef, useState } from "react";
+import { useLanguage } from "@/contexts/language-context";
 
 export function StatsSection() {
+  const { t } = useLanguage();
   const [isVisible, setIsVisible] = useState(false);
   const sectionRef = useRef<HTMLElement>(null);
 
@@ -84,24 +86,22 @@ export function StatsSection() {
             {/* TEXT */}
             <div className="lg:col-span-5 p-8 lg:p-12 flex flex-col justify-center space-y-5">
               <span className="text-sm font-semibold tracking-[0.25em] uppercase text-white">
-                About Us
+                {t.stats.aboutUs}
               </span>
 
               <h3 className="text-3xl lg:text-3xl  leading-tight text-white">
-                Precision. Innovation. Quality.
+                {t.stats.heading}
               </h3>
 
               <p className="text-white leading-relaxed text-sm">
-                We blend cutting-edge technology with meticulous craftsmanship
-                to deliver iconic properties that stand the test of time.
-                Trusted by clients worldwide.
+                {t.stats.description}
               </p>
 
               <Link
                 href="/listings"
                 className="inline-flex items-center gap-2 w-fit text-white font-semibold hover:gap-3 transition-all"
               >
-                VIEW LISTINGS
+                {t.stats.viewListings}
                 <ArrowRight className="w-4 h-4" />
               </Link>
             </div>

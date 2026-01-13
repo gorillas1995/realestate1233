@@ -8,19 +8,21 @@ import { FAQAccordion } from "@/components/faq-accordion";
 import { ArrowRight } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
+import { useLanguage } from "@/contexts/language-context";
 
 type Category = "all" | "house" | "apartment" | "land";
 
-const categories: { value: Category; label: string }[] = [
-  { value: "all", label: "ALL" },
-  { value: "house", label: "HOUSES" },
-  { value: "apartment", label: "APARTMENTS" },
-  { value: "land", label: "LANDS" },
-];
-
 export function ListingsContent() {
+  const { t } = useLanguage();
   const router = useRouter();
   const searchParams = useSearchParams();
+
+  const categories: { value: Category; label: string }[] = [
+    { value: "all", label: t.listings.all },
+    { value: "house", label: t.listings.houses },
+    { value: "apartment", label: t.listings.apartments },
+    { value: "land", label: t.listings.lands },
+  ];
 
   const initialCategory = (searchParams.get("category") as Category) || "all";
 
@@ -75,10 +77,10 @@ export function ListingsContent() {
       >
         <div className="container mx-auto px-4 lg:px-8">
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-4">
-            LISTINGS
+            {t.listings.title}
           </h1>
           <p className="text-muted-foreground text-lg max-w-2xl">
-            Explore our exclusive collection of luxury properties worldwide.
+            {t.listings.description}
           </p>
         </div>
       </section>
@@ -175,7 +177,7 @@ export function ListingsContent() {
           {!loading && filteredProperties.length === 0 && (
             <div className="text-center py-24">
               <p className="text-muted-foreground text-lg">
-                No properties found in this category.
+                {t.listings.noProperties}
               </p>
             </div>
           )}
@@ -187,10 +189,10 @@ export function ListingsContent() {
         <div className="container mx-auto px-4 lg:px-8">
           <div className="text-center max-w-2xl mx-auto mb-14">
             <span className="text-primary text-sm font-medium tracking-[0.2em] uppercase mb-4 block">
-              Frequently Asked Questions
+              {t.listings.faq.title}
             </span>
             <p className="text-muted-foreground">
-              Check below our most frequently asked questions
+              {t.listings.faq.description}
             </p>
           </div>
 

@@ -4,6 +4,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { ArrowRight } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
+import { useLanguage } from "@/contexts/language-context";
 
 // Use ONLY hardcoded featured properties
 const featuredProperties = [
@@ -31,6 +32,7 @@ const featuredProperties = [
 ];
 
 export function FeaturedListings() {
+  const { t } = useLanguage();
   const [isVisible, setIsVisible] = useState(false);
   const sectionRef = useRef<HTMLElement>(null);
 
@@ -59,13 +61,13 @@ export function FeaturedListings() {
         >
           <div className="space-y-3">
             <span className="inline-block text-primary text-sm font-semibold tracking-[0.2em] uppercase">
-              Featured Listings
+              {t.featuredListings.label}
             </span>
             <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-foreground">
-              Here are some of our featured listings you can view.
+              {t.featuredListings.title}
             </h2>
             <p className="text-muted-foreground max-w-2xl">
-              To view all of listings, click on the button below.
+              {t.featuredListings.description}
             </p>
           </div>
 
@@ -73,7 +75,7 @@ export function FeaturedListings() {
             href="/listings"
             className="inline-flex items-center gap-3 px-7 py-3 bg-primary text-white rounded-full hover:bg-primary/90 transition-all duration-300 hover:gap-3.5 hover:shadow-lg group"
           >
-            VIEW LISTINGS
+            {t.featuredListings.viewListings}
             <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" />
           </Link>
         </div>

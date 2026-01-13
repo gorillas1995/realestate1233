@@ -3,8 +3,10 @@
 import { ContactForm } from "@/components/contact/contact-form";
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
+import { useLanguage } from "@/contexts/language-context";
 
 export default function ContactPage() {
+  const { t } = useLanguage();
   const [isVisible, setIsVisible] = useState(false);
   const sectionRef = useRef<HTMLElement>(null);
 
@@ -36,14 +38,14 @@ export default function ContactPage() {
           {/* Right - Form and Info - Blue Card */}
           <div className="flex flex-col">
             <div className="bg-primary text-white rounded-3xl p-8 lg:p-12 flex-1">
-              <h1 className="text-4xl md:text-5xl font-bold mb-8">CONTACT</h1>
+              <h1 className="text-4xl md:text-5xl font-bold mb-8">{t.contact.title}</h1>
 
               <ContactForm />
 
               {/* Contact Info */}
               <div className="mt-8 pt-8 border-t border-white/20 space-y-3">
-                <p className="text-white/80">+132306565656</p>
-                <p className="text-white/80">Street 6 Underground, NYC</p>
+                <p className="text-white/80">{t.contact.phone}</p>
+                <p className="text-white/80">{t.contact.address}</p>
               </div>
             </div>
           </div>
