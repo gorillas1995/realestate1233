@@ -7,51 +7,51 @@ import { useEffect, useRef, useState } from "react";
 const testimonials = [
   {
     id: 1,
-    name: "Mark Anderson",
-    rating: 4.9,
+    name: "Alex M.",
+    rating: 5.0,
     comment:
-      "Urban Estate made buying my dream home a breeze. Professional, knowledgeable, and always available.",
-    image: "/placeholder.svg?height=80&width=80",
+      "What convinced me was the level of materials used as standard. CORIAN bathrooms, porcelain façades, zero thresholds — this is not speculative development, it’s architectural housing.",
+    image: "/review1.avif",
   },
   {
     id: 2,
-    name: "Haniwa Winston",
+    name: "Daniel R.",
     rating: 4.9,
     comment:
-      "They guided me through every step and found the perfect home within my budget.",
-    image: "/placeholder.svg?height=80&width=80",
+      "The layout, openness, and light are exceptional. You really feel the space. Add the fact that the beach is only 900 meters away in a straight line and it becomes a rare find.",
+    image: "/review2.webp",
   },
   {
     id: 3,
-    name: "Cristine Buckley",
-    rating: 4.9,
+    name: "Sofia T.",
+    rating: 5.0,
     comment:
-      "True experts in the market. Every recommendation matched my needs perfectly.",
-    image: "/placeholder.svg?height=80&width=80",
+      "I appreciated the inclusivity and atmosphere of the area. It feels safe, open-minded, and respectful — a place where everyone can feel comfortable and at home.",
+    image: "/review4.webp",
   },
   {
     id: 4,
-    name: "James Miller",
-    rating: 5.0,
+    name: "Michael B.",
+    rating: 4.8,
     comment:
-      "Excellent communication and outstanding service from start to finish.",
-    image: "/placeholder.svg?height=80&width=80",
+      "After visiting the site and reviewing the technical specs, it’s clear this project is built for long-term living, not quick resale. The climate and lighting systems are extremely well thought out.",
+    image: "/review3.avif",
   },
   {
     id: 5,
-    name: "Sophia Turner",
-    rating: 4.8,
+    name: "Elena C.",
+    rating: 5.0,
     comment:
-      "A seamless experience. I felt confident and supported throughout the process.",
-    image: "/placeholder.svg?height=80&width=80",
+      "The architectural details stood out immediately — linear pool lighting, hidden LEDs, glass balustrades. Everything is integrated, nothing feels added later.",
+    image: "/review5.webp",
   },
   {
     id: 6,
-    name: "Daniel Ross",
-    rating: 5.0,
+    name: "Chris W.",
+    rating: 4.9,
     comment:
-      "Highly professional team with deep knowledge of the real estate market.",
-    image: "/placeholder.svg?height=80&width=80",
+      "As someone who values privacy, design, and proximity to the sea, this project checks all the boxes. It feels calm, spacious, and intentionally designed.",
+    image: "/review6.avif",
   },
 ];
 
@@ -99,8 +99,9 @@ export function TestimonialsSection() {
             </h2>
 
             <p className="text-muted-foreground text-lg max-w-md">
-              Hear what our happy clients say about working with Urban Estate
-              and how we helped them find their perfect property.
+              Insights from early buyers, site visitors, and professionals
+              evaluating the architecture, materials, and setting of SITGES
+              CAPITAL Estate
             </p>
           </div>
 

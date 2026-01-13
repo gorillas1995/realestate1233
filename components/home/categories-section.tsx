@@ -7,42 +7,26 @@ const categories = [
   {
     title: "HOUSES",
     description:
-      "Explore our most premium, functional and exotic selection of our available houses.",
-    images: [
-      "/placeholder.svg?height=200&width=200",
-      "/placeholder.svg?height=200&width=200",
-      "/placeholder.svg?height=200&width=200",
-    ],
+      "Explore architect-designed homes defined by distinctive geometry, zero-threshold living, and seamless indoor-outdoor transitions. Each residence features porcelain stoneware exteriors, motorized sliding glazing, heated pools with linear lighting, and advanced climate systems engineered for exceptional comfort.",
+    images: ["/house1.jpeg", "/house2.jpeg", "/house3.jpeg"],
   },
   {
-    title: "LAND",
+    title: "INTERIOR DESIGN",
     description:
-      "We have some of most fertile and beautiful lands in our collection.",
-    images: [
-      "/placeholder.svg?height=200&width=200",
-      "/placeholder.svg?height=200&width=200",
-      "/placeholder.svg?height=200&width=200",
-    ],
+      "Designed for clients who value precision, comfort, and material excellence. These homes integrate underfloor heating, perimeter air-conditioning, CORIAN sanitary finishes, recessed magnetic lighting systems, and fully automated shading for a refined, hotel-level living experience.",
+    images: ["/house1.jpeg", "/house2.jpeg", "/house3.jpeg"],
   },
   {
-    title: "APARTMENTS",
+    title: "HIGH END",
     description:
-      "Luxury apartments starting from $80k including all services like security, internet, and top view etc.",
-    images: [
-      "/placeholder.svg?height=200&width=200",
-      "/placeholder.svg?height=200&width=200",
-      "/placeholder.svg?height=200&width=200",
-    ],
+      "Designed for clients who value precision, comfort, and material excellence. These homes integrate underfloor heating, perimeter air-conditioning, CORIAN sanitary finishes, recessed magnetic lighting systems, and fully automated shading for a refined, hotel-level living experience.",
+    images: ["/canapea.jpg", "/canapea-fata.jpg", "/canapea-profil.jpg"],
   },
   {
     title: "EXCLUSIVE ONLY",
     description:
-      "Luxury apartments starting from $80k including all services like security, internet, and top view etc.",
-    images: [
-      "/placeholder.svg?height=200&width=200",
-      "/placeholder.svg?height=200&width=200",
-      "/placeholder.svg?height=200&width=200",
-    ],
+      "A limited collection of ultra-exclusive residences offering advanced smart access systems, pivot entrance doors, illuminated glass balustrades, integrated audio, and a fully curated architectural lighting concept — all delivered as standard, not upgrades.",
+    images: ["/place11.jpeg", "/place12.jpeg", "/place13.jpeg"],
   },
 ];
 

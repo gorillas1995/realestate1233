@@ -1,19 +1,22 @@
-"use client"
+"use client";
 
-import { ContactForm } from "@/components/contact/contact-form"
-import Image from "next/image"
-import { useEffect, useRef, useState } from "react"
+import { ContactForm } from "@/components/contact/contact-form";
+import Image from "next/image";
+import { useEffect, useRef, useState } from "react";
 
 export default function ContactPage() {
-  const [isVisible, setIsVisible] = useState(false)
-  const sectionRef = useRef<HTMLElement>(null)
+  const [isVisible, setIsVisible] = useState(false);
+  const sectionRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
-    setTimeout(() => setIsVisible(true), 100)
-  }, [])
+    setTimeout(() => setIsVisible(true), 100);
+  }, []);
 
   return (
-    <section ref={sectionRef} className="min-h-screen pt-24 pb-16 lg:pt-28 lg:pb-24">
+    <section
+      ref={sectionRef}
+      className="min-h-screen pt-24 pb-16 lg:pt-28 lg:pb-24"
+    >
       <div className="container mx-auto px-4 lg:px-8">
         <div
           className={`grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8 transition-all duration-700 ${
@@ -23,7 +26,7 @@ export default function ContactPage() {
           {/* Left - Image with rounded corners */}
           <div className="relative aspect-[4/5] lg:aspect-auto rounded-3xl overflow-hidden">
             <Image
-              src="/placeholder.svg?height=900&width=700"
+              src="/house2.jpeg"
               alt="Contact Urban Estate"
               fill
               className="object-cover"
@@ -47,5 +50,5 @@ export default function ContactPage() {
         </div>
       </div>
     </section>
-  )
+  );
 }

@@ -1,285 +1,221 @@
+// =======================
+// PROPERTIES
+// =======================
+
 export interface Property {
-  id: string
-  title: string
-  slug: string
-  price: string
-  category: "house" | "apartment" | "land"
-  image: string
-  location: string
-  bedrooms?: number
-  bathrooms?: number
-  area: string
-  description: string
-  amenities: string[]
-  gallery: string[]
+  id: string;
+  title: string;
+  slug: string;
+  price: string;
+  category: "house" | "apartment" | "land";
+  image: string;
+  location: string;
+  bedrooms?: number;
+  bathrooms?: number;
+  area: string;
+  description: string;
+  amenities: string[];
+  gallery: string[];
 }
 
 export const properties: Property[] = [
   {
     id: "1",
-    title: "Willow Creek Cottage",
-    slug: "willow-creek-cottage",
-    price: "€2,450,000",
+    title: "La Plana Claror",
+    slug: "la-plana-claror",
+    price: "On request",
     category: "house",
-    image: "/placeholder.svg?height=600&width=800",
-    location: "Beverly Hills, CA",
-    bedrooms: 5,
+    image: "/placeholder.svg",
+    location: "La Plana · 900 m from the sea",
+    bedrooms: 4,
     bathrooms: 4,
-    area: "4,500 sq ft",
+    area: "Approx. 320 sqm",
     description:
-      "A stunning contemporary masterpiece nestled in the prestigious hills, featuring panoramic views, infinity pool, and world-class finishes throughout.",
-    amenities: ["Pool", "Garden", "Garage", "Smart Home", "Wine Cellar", "Home Theater"],
-    gallery: [
-      "/placeholder.svg?height=600&width=800",
-      "/placeholder.svg?height=600&width=800",
-      "/placeholder.svg?height=600&width=800",
-      "/placeholder.svg?height=600&width=800",
+      "A home defined by light and openness. Spaces flow naturally through zero-threshold glazing, linear lighting, and warm materials, creating a sense of clarity, balance, and a fresh beginning.",
+    amenities: [
+      "Heated pool with linear lighting",
+      "Zero-threshold motorized glazing",
+      "Underfloor heating (multi-zone)",
+      "Perimeter air-conditioning",
+      "CORIAN kitchens & bathrooms",
     ],
+    gallery: [],
   },
   {
     id: "2",
-    title: "Skyline Penthouse",
-    slug: "skyline-penthouse",
-    price: "€8,900,000",
-    category: "apartment",
-    image: "/placeholder.svg?height=600&width=800",
-    location: "Manhattan, NY",
+    title: "La Plana Brisa",
+    slug: "la-plana-brisa",
+    price: "On request",
+    category: "house",
+    image: "/placeholder.svg",
+    location: "La Plana · Coastal environment",
     bedrooms: 4,
-    bathrooms: 3,
-    area: "3,200 sq ft",
+    bathrooms: 4,
+    area: "Approx. 330 sqm",
     description:
-      "An exclusive penthouse offering 360-degree views of the iconic skyline, featuring floor-to-ceiling windows and bespoke interior design.",
-    amenities: ["Terrace", "Concierge", "Gym", "Spa", "Private Elevator", "Wine Room"],
-    gallery: [
-      "/placeholder.svg?height=600&width=800",
-      "/placeholder.svg?height=600&width=800",
-      "/placeholder.svg?height=600&width=800",
-      "/placeholder.svg?height=600&width=800",
+      "A refuge where air, silence, and a slower rhythm shape everyday life. The presence of the sea is felt in the atmosphere, not only in the view.",
+    amenities: [
+      "Architect-designed volumes",
+      "Motorized ZIP exterior shutters",
+      "Recessed magnetic lighting",
+      "Integrated ceiling audio",
+      "Private garden & terraces",
     ],
+    gallery: [],
   },
   {
     id: "3",
-    title: "Mediterranean Estate",
-    slug: "mediterranean-estate",
-    price: "€12,500,000",
+    title: "La Plana Serena",
+    slug: "la-plana-serena",
+    price: "On request",
     category: "house",
-    image: "/placeholder.svg?height=600&width=800",
-    location: "Marbella, Spain",
-    bedrooms: 7,
-    bathrooms: 6,
-    area: "8,500 sq ft",
+    image: "/placeholder.svg",
+    location: "La Plana · Quiet residential zone",
+    bedrooms: 4,
+    bathrooms: 4,
+    area: "Approx. 310 sqm",
     description:
-      "A breathtaking Mediterranean estate featuring classical architecture, lush gardens, and direct beach access on the Costa del Sol.",
-    amenities: ["Beach Access", "Tennis Court", "Pool", "Guest House", "Helipad", "Vineyard"],
-    gallery: [
-      "/placeholder.svg?height=600&width=800",
-      "/placeholder.svg?height=600&width=800",
-      "/placeholder.svg?height=600&width=800",
-      "/placeholder.svg?height=600&width=800",
+      "Pure harmony. Designed for calm, privacy, and reconnection, this residence keeps the noise of the world comfortably at a distance.",
+    amenities: [
+      "Frameless illuminated glass balustrades",
+      "Hidden linear LED stair lighting",
+      "Smart access (code, remote, fingerprint)",
+      "Porcelain stoneware finishes",
+      "Heated pool",
     ],
+    gallery: [],
   },
   {
     id: "4",
-    title: "Alpine Retreat",
-    slug: "alpine-retreat",
-    price: "€6,750,000",
+    title: "La Plana Alba",
+    slug: "la-plana-alba",
+    price: "On request",
     category: "house",
-    image: "/placeholder.svg?height=600&width=800",
-    location: "Zermatt, Switzerland",
-    bedrooms: 6,
-    bathrooms: 5,
-    area: "5,800 sq ft",
-    description:
-      "An extraordinary mountain retreat offering ski-in/ski-out access, panoramic Alpine views, and world-class wellness facilities.",
-    amenities: ["Ski Room", "Sauna", "Hot Tub", "Wine Cellar", "Cinema", "Gym"],
-    gallery: [
-      "/placeholder.svg?height=600&width=800",
-      "/placeholder.svg?height=600&width=800",
-      "/placeholder.svg?height=600&width=800",
-      "/placeholder.svg?height=600&width=800",
-    ],
-  },
-  {
-    id: "5",
-    title: "Coastal Paradise",
-    slug: "coastal-paradise",
-    price: "€4,200,000",
-    category: "house",
-    image: "/placeholder.svg?height=600&width=800",
-    location: "Malibu, CA",
+    image: "/placeholder.svg",
+    location: "La Plana · East-facing orientation",
     bedrooms: 4,
     bathrooms: 4,
-    area: "3,800 sq ft",
+    area: "Approx. 325 sqm",
     description:
-      "A stunning beachfront property with seamless indoor-outdoor living, private beach access, and breathtaking Pacific Ocean views.",
-    amenities: ["Beach Access", "Pool", "Fire Pit", "Outdoor Kitchen", "Surf Storage", "Deck"],
-    gallery: [
-      "/placeholder.svg?height=600&width=800",
-      "/placeholder.svg?height=600&width=800",
-      "/placeholder.svg?height=600&width=800",
-      "/placeholder.svg?height=600&width=800",
+      "Morning light as a permanent state of being. A bright, serene home with a clean architectural character that inspires freshness and clarity.",
+    amenities: [
+      "Pivot metal entrance door",
+      "Advanced rainwater drainage systems",
+      "Motorized sliding façades",
+      "Integrated architectural lighting",
+      "Optional furnished package",
     ],
+    gallery: [],
   },
-  {
-    id: "6",
-    title: "Urban Loft",
-    slug: "urban-loft",
-    price: "€1,850,000",
-    category: "apartment",
-    image: "/placeholder.svg?height=600&width=800",
-    location: "London, UK",
-    bedrooms: 2,
-    bathrooms: 2,
-    area: "2,100 sq ft",
-    description:
-      "A converted warehouse loft featuring soaring ceilings, exposed brick, and contemporary designer finishes in the heart of the city.",
-    amenities: ["High Ceilings", "Parking", "Concierge", "Roof Access", "Storage", "Bike Room"],
-    gallery: [
-      "/placeholder.svg?height=600&width=800",
-      "/placeholder.svg?height=600&width=800",
-      "/placeholder.svg?height=600&width=800",
-      "/placeholder.svg?height=600&width=800",
-    ],
-  },
-  {
-    id: "7",
-    title: "Vineyard Estate",
-    slug: "vineyard-estate",
-    price: "€18,000,000",
-    category: "land",
-    image: "/placeholder.svg?height=600&width=800",
-    location: "Tuscany, Italy",
-    area: "50 acres",
-    description:
-      "A prestigious wine estate featuring historic villa, productive vineyard, and olive groves in the heart of Tuscany's wine country.",
-    amenities: ["Vineyard", "Wine Production", "Guest Houses", "Chapel", "Olive Grove", "Pool"],
-    gallery: [
-      "/placeholder.svg?height=600&width=800",
-      "/placeholder.svg?height=600&width=800",
-      "/placeholder.svg?height=600&width=800",
-      "/placeholder.svg?height=600&width=800",
-    ],
-  },
-  {
-    id: "8",
-    title: "Island Sanctuary",
-    slug: "island-sanctuary",
-    price: "€35,000,000",
-    category: "land",
-    image: "/placeholder.svg?height=600&width=800",
-    location: "Bahamas",
-    area: "12 acres",
-    description:
-      "An exclusive private island offering complete privacy, pristine beaches, and the ultimate tropical escape in crystal-clear waters.",
-    amenities: ["Private Beach", "Dock", "Helipad", "Main Villa", "Guest Cottages", "Boat House"],
-    gallery: [
-      "/placeholder.svg?height=600&width=800",
-      "/placeholder.svg?height=600&width=800",
-      "/placeholder.svg?height=600&width=800",
-      "/placeholder.svg?height=600&width=800",
-    ],
-  },
-]
+];
+
+// =======================
+// TESTIMONIALS (EARLY IMPRESSIONS)
+// =======================
 
 export interface Testimonial {
-  id: string
-  name: string
-  role: string
-  content: string
-  avatar: string
+  id: string;
+  name: string;
+  role: string;
+  content: string;
+  avatar: string;
 }
 
 export const testimonials: Testimonial[] = [
   {
     id: "1",
-    name: "Alexander von Sterling",
-    role: "Investment Banker",
+    name: "Alex M.",
+    role: "Architectural Consultant",
     content:
-      "Urban Estate exceeded all expectations. Their attention to detail and understanding of luxury properties is unmatched in the industry.",
-    avatar: "/placeholder.svg?height=100&width=100",
+      "The project stands out through material honesty and technical coherence. CORIAN, porcelain façades, linear lighting — these are decisions made for long-term living, not marketing.",
+    avatar: "/placeholder.svg",
   },
   {
     id: "2",
-    name: "Isabella Rossi",
-    role: "Fashion Designer",
+    name: "Sofia T.",
+    role: "Future Resident",
     content:
-      "The team at Urban Estate helped me find my dream Mediterranean villa. Their expertise and discretion made the entire process seamless.",
-    avatar: "/placeholder.svg?height=100&width=100",
+      "What convinced me was the atmosphere of the area — open-minded, calm, and inclusive — combined with the fact that the sea is only 900 meters away in a straight line.",
+    avatar: "/placeholder.svg",
   },
   {
     id: "3",
-    name: "James Wellington III",
-    role: "Tech Entrepreneur",
+    name: "Daniel R.",
+    role: "Design-Oriented Buyer",
     content:
-      "Working with Urban Estate was a privilege. They understood exactly what I was looking for and delivered beyond my expectations.",
-    avatar: "/placeholder.svg?height=100&width=100",
+      "The spatial flow, absence of thresholds, and discreet climate systems create a feeling of comfort you usually find only in private villas or boutique hotels.",
+    avatar: "/placeholder.svg",
   },
   {
     id: "4",
-    name: "Sofia Chen",
-    role: "Art Collector",
+    name: "Elena C.",
+    role: "Interior Designer",
     content:
-      "The level of service and the quality of properties presented were exceptional. Urban Estate truly understands luxury living.",
-    avatar: "/placeholder.svg?height=100&width=100",
+      "Everything is integrated — lighting, audio, balustrades. Nothing feels added later. It’s a very controlled architectural language.",
+    avatar: "/placeholder.svg",
   },
-]
+];
+
+// =======================
+// FAQ (PROJECT-FOCUSED)
+// =======================
 
 export interface FAQ {
-  id: string
-  question: string
-  answer: string
+  id: string;
+  question: string;
+  answer: string;
 }
 
 export const faqs: FAQ[] = [
   {
     id: "1",
-    question: "What sets Urban Estate apart from other luxury real estate agencies?",
+    question: "Is the project completed?",
     answer:
-      "Urban Estate combines decades of expertise with an exclusive portfolio of properties valued at over €200 million. Our bespoke approach ensures personalized service, complete discretion, and access to off-market opportunities unavailable elsewhere.",
+      "The development is currently under construction. Site visits, technical reviews, and early reservations are available by appointment.",
   },
   {
     id: "2",
-    question: "Do you offer international property acquisition services?",
+    question: "What is included as standard?",
     answer:
-      "Yes, our global network spans over 30 countries. We assist clients with acquiring luxury properties worldwide, handling all aspects from property search to legal compliance and after-sale services.",
+      "All residences are delivered with heated pools, underfloor heating, perimeter air-conditioning, CORIAN kitchens and bathrooms, smart access systems, and architectural lighting — as standard, not optional upgrades.",
   },
   {
     id: "3",
-    question: "What is your commission structure?",
+    question: "Is furniture included?",
     answer:
-      "Our commission structure is tailored to each transaction and property value. We operate with complete transparency and discuss all fees during our initial consultation to ensure alignment with your expectations.",
+      "Kitchens and bathrooms are included in the price. Full furniture packages can be provided optionally, based on the architectural renderings.",
   },
   {
     id: "4",
-    question: "Can you help with property investment portfolios?",
+    question: "How close is the beach?",
     answer:
-      "Absolutely. Our investment advisory team specializes in building diversified real estate portfolios. We provide market analysis, yield projections, and ongoing portfolio management services.",
+      "The sea is located approximately 900 meters away in a direct line, within a calm Mediterranean residential setting.",
   },
   {
     id: "5",
-    question: "How do you ensure client confidentiality?",
+    question: "What type of buyers is this project designed for?",
     answer:
-      "Discretion is paramount at Urban Estate. We employ strict confidentiality protocols, including NDAs for all staff, secure communication channels, and private viewing arrangements to protect our clients' privacy.",
+      "The project is aimed at clients who value architecture, material quality, privacy, inclusivity, and long-term comfort over speculative or short-term real estate products.",
   },
-]
+];
+
+// =======================
+// STATS (DEVELOPMENT-REALISTIC)
+// =======================
 
 export const stats = [
-  { value: "10K", label: "Employees Worldwide" },
-  { value: "€12B", label: "In Construction Value" },
-  { value: "1,200", label: "Projects Completed" },
-]
+  { value: "900 m", label: "Distance to the Sea" },
+  { value: "100%", label: "Architect-Designed Homes" },
+  { value: "Standard", label: "High-End Specifications" },
+];
+
+// =======================
+// GALLERY PLACEHOLDERS
+// =======================
 
 export const galleryImages = [
-  "/placeholder.svg?height=600&width=800",
-  "/placeholder.svg?height=600&width=800",
-  "/placeholder.svg?height=600&width=800",
-  "/placeholder.svg?height=600&width=800",
-  "/placeholder.svg?height=600&width=800",
-  "/placeholder.svg?height=600&width=800",
-  "/placeholder.svg?height=600&width=800",
-  "/placeholder.svg?height=600&width=800",
-  "/placeholder.svg?height=600&width=800",
-  "/placeholder.svg?height=600&width=800",
-  "/placeholder.svg?height=600&width=800",
-  "/placeholder.svg?height=600&width=800",
-]
+  "/placeholder.svg",
+  "/placeholder.svg",
+  "/placeholder.svg",
+  "/placeholder.svg",
+];
