@@ -98,8 +98,17 @@ export function Header() {
             : "opacity-0 invisible pointer-events-none"
         }`}
       >
-        <div className="container mx-auto px-6 pt-24 pb-8">
-          <div className="flex flex-col gap-4">
+        {/* Close Button */}
+        <button
+          onClick={() => setIsMobileMenuOpen(false)}
+          className="absolute top-6 right-6 p-3 text-foreground hover:text-primary transition-colors duration-300 z-50"
+          aria-label="Close menu"
+        >
+          <X className="w-8 h-8" />
+        </button>
+
+        <div className="container mx-auto px-6 pt-24 pb-8 flex flex-col h-full">
+          <div className="flex flex-col gap-4 flex-1">
             {navLinks.map((link, index) => (
               <Link
                 key={link.href}
@@ -120,8 +129,63 @@ export function Header() {
               </Link>
             ))}
           </div>
+          
+          {/* Language Switcher at bottom of mobile menu */}
+          <div
+            className="mt-auto pt-8 border-t border-border"
+            style={{
+              opacity: isMobileMenuOpen ? 1 : 0,
+              transitionProperty: "opacity",
+              transitionDuration: "500ms",
+              transitionTimingFunction: "ease",
+              transitionDelay: isMobileMenuOpen ? `${navLinks.length * 75}ms` : "0ms",
+            }}
+          >
+            <MobileLanguageSwitcher />
+          </div>
         </div>
       </div>
     </header>
+  );
+}
+
+// Mobile Language Switcher Component
+function MobileLanguageSwitcher() {
+  const { language, setLanguage } = useLanguage();
+
+  const toggleLanguage = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    e.stopPropagation();
+    const newLang = language === "en" ? "es" : "en";
+    setLanguage(newLang);
+  };
+
+  return (
+    <button
+      type="button"
+      onClick={toggleLanguage}
+      className="w-full flex items-center justify-between text-3xl font-medium text-foreground hover:text-primary transition-colors duration-300 group"
+      aria-label="Switch language"
+    >
+      <span>Language</span>
+      <div className="flex items-center gap-2">
+        <span
+          className={`text-2xl font-semibold transition-colors duration-300 ${
+            language === "en" ? "text-primary" : "text-muted-foreground"
+          }`}
+        >
+          EN
+        </span>
+        <span className="text-muted-foreground">/</span>
+        <span
+          className={`text-2xl font-semibold transition-colors duration-300 ${
+            language === "es" ? "text-primary" : "text-muted-foreground"
+          }`}
+        >
+          ES
+        </span>
+        <ArrowRight className="w-6 h-6 opacity-0 -translate-x-4 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300" />
+      </div>
+    </button>
   );
 }
