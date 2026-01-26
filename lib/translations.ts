@@ -146,6 +146,33 @@ export interface Translations {
       description: string;
     };
   };
+
+  // Property Page
+  property: {
+    description: string;
+    details: string;
+    amenities: string;
+    backToListings: string;
+    scheduleViewing: string;
+    requestInformation: string;
+    seeCompleteDescription: string;
+    showLess: string;
+    landArea: string;
+    totalBuiltArea: string;
+    basementArea: string;
+    groundFloorArea: string;
+    upperFloorArea: string;
+    porchesArea: string;
+    terraceArea: string;
+    poolArea: string;
+    buttons: {
+      images: string;
+      floorPlans: string;
+      virtualTour: string;
+      video: string;
+      map: string;
+    };
+  };
 }
 
 export const translations: Record<Language, Translations> = {
@@ -280,6 +307,31 @@ export const translations: Record<Language, Translations> = {
           "We design for how people will live, not for how projects are sold. Our homes are built for comfort, inclusivity, and permanence — places meant to age gracefully and remain relevant long after completion.",
       },
     },
+    property: {
+      description: "Description",
+      details: "Property Details",
+      amenities: "Amenities",
+      backToListings: "Back to Listings",
+      scheduleViewing: "Schedule Viewing",
+      requestInformation: "Request Information",
+      seeCompleteDescription: "See complete description",
+      showLess: "Show less",
+      landArea: "Land Area",
+      totalBuiltArea: "Total Built Area",
+      basementArea: "Basement Area",
+      groundFloorArea: "Ground Floor Area",
+      upperFloorArea: "Upper Floor Area",
+      porchesArea: "Porches Area",
+      terraceArea: "Terrace Area",
+      poolArea: "Pool Area",
+      buttons: {
+        images: "Images",
+        floorPlans: "Floor Plans",
+        virtualTour: "3D Virtual Tour",
+        video: "Video",
+        map: "Map",
+      },
+    },
   },
   es: {
     nav: {
@@ -410,6 +462,31 @@ export const translations: Record<Language, Translations> = {
         title: "VISIÓN A LARGO PLAZO",
         description:
           "Diseñamos para cómo vivirán las personas, no para cómo se venden los proyectos. Nuestros hogares están construidos para la comodidad, la inclusividad y la permanencia: lugares destinados a envejecer con gracia y seguir siendo relevantes mucho después de la finalización.",
+      },
+    },
+    property: {
+      description: "Descripción",
+      details: "Detalles de la Propiedad",
+      amenities: "Comodidades",
+      backToListings: "Volver a Propiedades",
+      scheduleViewing: "Programar Visita",
+      requestInformation: "Solicitar Información",
+      seeCompleteDescription: "Ver descripción completa",
+      showLess: "Mostrar menos",
+      landArea: "Superficie del Terreno",
+      totalBuiltArea: "Superficie Construida Total",
+      basementArea: "Superficie Sótano",
+      groundFloorArea: "Superficie Planta Baja",
+      upperFloorArea: "Superficie Planta Alta",
+      porchesArea: "Superficie Porches",
+      terraceArea: "Superficie Terraza",
+      poolArea: "Superficie Piscina",
+      buttons: {
+        images: "Imágenes",
+        floorPlans: "Planos",
+        virtualTour: "Tour Virtual 3D",
+        video: "Video",
+        map: "Mapa",
       },
     },
   },
