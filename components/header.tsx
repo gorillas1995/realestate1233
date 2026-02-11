@@ -12,9 +12,14 @@ export function Header() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
+  // Insert Interior Design link above Gallery
   const navLinks = [
     { href: "/", label: t.nav.home },
     { href: "/listings", label: t.nav.listings },
+    {
+      href: "/interior-design",
+      label: t.nav.interiorDesign ?? "INTERIOR DESIGN",
+    }, // new link, fallback if t.nav.interiorDesign is not available
     { href: "/gallery", label: t.nav.gallery },
     { href: "/about", label: t.nav.about },
     { href: "/contact", label: t.nav.contact },
@@ -129,7 +134,7 @@ export function Header() {
               </Link>
             ))}
           </div>
-          
+
           {/* Language Switcher at bottom of mobile menu */}
           <div
             className="mt-auto pt-8 border-t border-border"
@@ -138,7 +143,9 @@ export function Header() {
               transitionProperty: "opacity",
               transitionDuration: "500ms",
               transitionTimingFunction: "ease",
-              transitionDelay: isMobileMenuOpen ? `${navLinks.length * 75}ms` : "0ms",
+              transitionDelay: isMobileMenuOpen
+                ? `${navLinks.length * 75}ms`
+                : "0ms",
             }}
           >
             <MobileLanguageSwitcher />

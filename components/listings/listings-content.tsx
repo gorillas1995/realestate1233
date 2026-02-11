@@ -3,7 +3,6 @@
 import { useState, useMemo, useEffect, useRef } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { properties, faqs } from "@/lib/data";
-import { PropertyCard } from "@/components/property-card";
 import { FAQAccordion } from "@/components/faq-accordion";
 import { ArrowRight } from "lucide-react";
 import Link from "next/link";
@@ -18,10 +17,7 @@ export function ListingsContent() {
   const searchParams = useSearchParams();
 
   const categories: { value: Category; label: string }[] = [
-    { value: "all", label: t.listings.all },
     { value: "house", label: t.listings.houses },
-    { value: "apartment", label: t.listings.apartments },
-    { value: "land", label: t.listings.lands },
   ];
 
   const initialCategory = (searchParams.get("category") as Category) || "all";
@@ -43,7 +39,7 @@ export function ListingsContent() {
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => entry.isIntersecting && setIsVisible(true),
-      { threshold: 0.1 }
+      { threshold: 0.1 },
     );
 
     if (sectionRef.current) observer.observe(sectionRef.current);
@@ -85,7 +81,7 @@ export function ListingsContent() {
         </div>
       </section>
 
-      {/* STICKY FILTER BAR */}
+      {/* FILTER BAR */}
       <section className="bg-background/80 backdrop-blur-md border-b border-border">
         <div className="container mx-auto px-4 lg:px-8 py-6">
           <div className="flex justify-center gap-4 flex-wrap">
@@ -106,7 +102,6 @@ export function ListingsContent() {
                     {category.label}
                   </span>
 
-                  {/* ARROW */}
                   <span
                     className={`flex items-center justify-center w-7 h-7 rounded-full transition-all duration-300 ${
                       isActive
@@ -127,7 +122,7 @@ export function ListingsContent() {
         </div>
       </section>
 
-      {/* LISTINGS GRID (similar to FeaturedListings style) */}
+      {/* LISTINGS GRID */}
       <section ref={sectionRef} className="py-12 lg:py-20">
         <div className="w-full px-2 sm:px-4 lg:px-6">
           <div
@@ -140,37 +135,41 @@ export function ListingsContent() {
                 loading ? (
                   <div
                     key={index}
-                    className="rounded-md overflow-hidden border border-border bg-white shadow-sm"
-                    style={{ animationDelay: `${index * 60}ms` }}
+                    className="rounded-md border border-border bg-white shadow-sm"
                   >
-                    <div className="relative aspect-6/7 bg-secondary/40 animate-pulse rounded-md" />
-                    <div className="mt-2 mb-2 px-4 py-2 bg-[#F1F3F4] h-10 rounded-t" />
+                    <div className="h-48 bg-secondary/40 animate-pulse rounded-t-md" />
+                    <div className="px-4 py-3 bg-[#F1F3F4] h-10" />
                   </div>
                 ) : (
                   <Link
                     key={property.id}
                     href={`/property/${property.slug}`}
-                    className="group rounded-md overflow-hidden border border-border bg-white shadow-sm hover:-translate-y-1 hover:shadow-xl transition-all duration-300"
+                    className="group rounded-md border border-border bg-white shadow-sm hover:-translate-y-1 hover:shadow-xl transition-all duration-300"
                     style={{ animationDelay: `${index * 60}ms` }}
                   >
-                    <div className="relative aspect-6/7">
+                    {/* IMAGE — auto height, fully visible */}
+                    <div className="w-full bg-white flex items-center justify-center p-2">
                       <Image
                         src={property.image || "/placeholder.svg"}
                         alt={property.title}
-                        fill
-                        className="object-cover transition-transform duration-700 group-hover:scale-105"
+                        width={800}
+                        height={600}
+                        className="w-full h-auto object-contain"
+                        sizes="(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 33vw"
                       />
                     </div>
-                    <div className="mt-2 mb-2 px-4 py-2 bg-[#F1F3F4] flex items-center justify-between rounded-t">
-                      <span className="text-base font-semibold text-foreground group-hover:text-black transition-colors duration-300 truncate">
+
+                    {/* FOOTER */}
+                    <div className="px-4 py-3 bg-[#F1F3F4] flex items-center justify-between">
+                      <span className="text-base font-semibold truncate">
                         {property.title}
                       </span>
-                      <span className="text-primary font-semibold text-base whitespace-nowrap">
+                      <span className="text-primary font-semibold whitespace-nowrap">
                         {property.price}
                       </span>
                     </div>
                   </Link>
-                )
+                ),
             )}
           </div>
 
