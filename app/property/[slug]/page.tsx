@@ -1,6 +1,7 @@
 import { notFound } from "next/navigation"
 import { properties } from "@/lib/data"
 import { PropertyGallery } from "@/components/property/property-gallery"
+import { PropertyRenders } from "@/components/property/property-renders"
 import { PropertyInfo } from "@/components/property/property-info"
 import { RelatedProperties } from "@/components/property/related-properties"
 
@@ -45,6 +46,7 @@ export default async function PropertyPage({ params }: PropertyPageProps) {
   return (
     <>
       <PropertyGallery property={property} />
+      <PropertyRenders property={property} />
       <PropertyInfo property={property} />
       <RelatedProperties properties={relatedProperties} />
     </>

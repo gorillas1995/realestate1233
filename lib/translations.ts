@@ -171,6 +171,13 @@ export interface Translations {
       virtualTour: string;
       video: string;
       map: string;
+      renders: string;
+    };
+    renders: {
+      label: string;
+      title: string;
+      description: string;
+      cta: string;
     };
   };
 }
@@ -330,6 +337,13 @@ export const translations: Record<Language, Translations> = {
         virtualTour: "3D Virtual Tour",
         video: "Video",
         map: "Map",
+        renders: "Renders",
+      },
+      renders: {
+        label: "ARCHITECTURAL VISUALIZATION",
+        title: "Experience Every Detail Before It's Built",
+        description: "Explore photorealistic renders of every room and space. Each image is crafted to reflect the exact materials, lighting, and atmosphere of the finished residence — so you can feel at home before the first key is turned.",
+        cta: "View All Renders",
       },
     },
   },
@@ -487,6 +501,13 @@ export const translations: Record<Language, Translations> = {
         virtualTour: "Tour Virtual 3D",
         video: "Video",
         map: "Mapa",
+        renders: "Renderizados",
+      },
+      renders: {
+        label: "VISUALIZACIÓN ARQUITECTÓNICA",
+        title: "Experimenta Cada Detalle Antes de que se Construya",
+        description: "Explora renders fotorrealistas de cada habitación y espacio. Cada imagen refleja los materiales, la iluminación y la atmósfera exactos de la residencia terminada — para que te sientas en casa antes de girar la primera llave.",
+        cta: "Ver Todos los Renders",
       },
     },
   },
