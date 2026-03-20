@@ -5,34 +5,11 @@ import Image from "next/image";
 import { ArrowRight } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { useLanguage } from "@/contexts/language-context";
+import { properties } from "@/lib/data";
+import ImageKitImage from "@/components/ImageKitImage";
 
-// Hardcoded featured properties
-const featuredProperties = [
-  {
-    id: "house1",
-    title: "La Plana Claror - XIRGU 69",
-    price: "€2,350,000",
-    image: "/xirgu69.png",
-    href: "/property/la-plana-claror",
-    area: "600,00 m²",
-  },
-  {
-    id: "house2",
-    title: "La Plana Brisa - XIRGU 71",
-    price: "€970,000",
-    image: "/xirgu71.png",
-    href: "/property/la-plana-brisa",
-    area: "600,00 m²",
-  },
-  {
-    id: "house3",
-    title: "La Plana Serena - XIRGU 73",
-    price: "€1,550,000",
-    image: "/xirgu73.png",
-    href: "/property/la-plana-serena",
-    area: "600,00 m²",
-  },
-];
+// Featured properties — first 3 from data
+const featuredProperties = properties.slice(0, 3);
 
 export function FeaturedListings() {
   const { t } = useLanguage();
@@ -94,18 +71,29 @@ export function FeaturedListings() {
           {featuredProperties.map((property, index) => (
             <Link
               key={property.id}
-              href={property.href}
+              href={`/property/${property.slug}`}
               className="group rounded-md overflow-hidden border border-border bg-white shadow-sm hover:-translate-y-1 hover:shadow-xl transition-all duration-300"
               style={{ animationDelay: `${index * 60}ms` }}
             >
-              {/* IMAGE */}
+              {/* IMAGE — uses ImageKit when imageKitGallery exists */}
               <div className="relative aspect-6/7">
-                <Image
-                  src={property.image}
-                  alt={property.title}
-                  fill
-                  className="object-cover transition-transform duration-700 group-hover:scale-105"
-                />
+                {property.imageKitGallery && property.imageKitGallery.length > 0 ? (
+                  <ImageKitImage
+                    path={property.imageKitGallery[0]}
+                    alt={property.title}
+                    fill
+                    className="object-cover transition-transform duration-700 group-hover:scale-105"
+                    width={800}
+                    height={933}
+                  />
+                ) : (
+                  <Image
+                    src={property.image || "/placeholder.svg"}
+                    alt={property.title}
+                    fill
+                    className="object-cover transition-transform duration-700 group-hover:scale-105"
+                  />
+                )}
 
                 {/* BLURRED AREA BADGE */}
                 <div className="absolute bottom-3 left-3">

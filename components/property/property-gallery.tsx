@@ -6,20 +6,29 @@ import Link from "next/link"
 import { ArrowLeft, X, ChevronLeft, ChevronRight, FileText, Box, Play, MapPin, Image as ImageIcon } from "lucide-react"
 import type { Property } from "@/lib/data"
 import { useLanguage } from "@/contexts/language-context"
+import ImageKitImage from "@/components/ImageKitImage"
 
 interface PropertyGalleryProps {
   property: Property
 }
 
 export function PropertyGallery({ property }: PropertyGalleryProps) {
-  const { t } = useLanguage()
+  const { t, language } = useLanguage()
+
+  /** Google Maps iframe: coordinate-based embed (no API key). Replaces broken pb= template. */
+  const mapEmbedSrc =
+    property.mapLatitude != null && property.mapLongitude != null
+      ? `https://www.google.com/maps?q=${property.mapLatitude},${property.mapLongitude}&z=17&hl=${language === "es" ? "es" : "en"}&output=embed`
+      : ""
   const [currentImageIndex, setCurrentImageIndex] = useState(0)
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null)
   const [showFloorPlans, setShowFloorPlans] = useState(false)
   const [currentFloorPlanIndex, setCurrentFloorPlanIndex] = useState(0)
   const [showMap, setShowMap] = useState(false)
   const [showVirtualTour, setShowVirtualTour] = useState(false)
-  const allImages = [property.image, ...property.gallery]
+  // Use ImageKit gallery when available; otherwise fall back to image + gallery
+  const useImageKit = property.imageKitGallery && property.imageKitGallery.length > 0
+  const allImages = useImageKit ? property.imageKitGallery! : [property.image, ...property.gallery]
   const floorPlans = property.floorPlans || (property.floorPlansImage ? [property.floorPlansImage] : [])
 
   const openLightbox = (index: number) => setLightboxIndex(index)
@@ -118,16 +127,27 @@ export function PropertyGallery({ property }: PropertyGalleryProps) {
         {/* Gallery Grid */}
         <div className="container mx-auto px-4 sm:px-6 lg:px-12">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-2 md:gap-4">
-            {/* Main Image */}
+            {/* Main Image — uses ImageKit when imageKitGallery is available */}
             <div className="relative">
               <div className="relative aspect-4/3 overflow-hidden rounded-xl md:rounded-2xl group">
-                <Image
-                  src={allImages[currentImageIndex] || "/placeholder.svg"}
-                  alt={`${property.title} - Image ${currentImageIndex + 1}`}
-                  fill
-                  className="object-cover transition-transform duration-700 group-hover:scale-[1.02]"
-                  priority
-                />
+                {useImageKit ? (
+                  <ImageKitImage
+                    path={allImages[currentImageIndex] || ""}
+                    alt={`${property.title} - Image ${currentImageIndex + 1}`}
+                    fill
+                    className="object-cover transition-transform duration-700 group-hover:scale-[1.02]"
+                    width={1200}
+                    height={900}
+                  />
+                ) : (
+                  <Image
+                    src={allImages[currentImageIndex] || "/placeholder.svg"}
+                    alt={`${property.title} - Image ${currentImageIndex + 1}`}
+                    fill
+                    className="object-cover transition-transform duration-700 group-hover:scale-[1.02]"
+                    priority
+                  />
+                )}
                 <button
                   onClick={() => openLightbox(currentImageIndex)}
                   className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-500"
@@ -171,12 +191,23 @@ export function PropertyGallery({ property }: PropertyGalleryProps) {
                   onClick={() => openLightbox(index + 1)}
                   className="relative aspect-[4/3] overflow-hidden rounded-xl md:rounded-2xl group"
                 >
-                  <Image
-                    src={image || "/placeholder.svg"}
-                    alt={`${property.title} - Image ${index + 2}`}
-                    fill
-                    className="object-cover transition-transform duration-700 group-hover:scale-105"
-                  />
+                  {useImageKit ? (
+                    <ImageKitImage
+                      path={image || ""}
+                      alt={`${property.title} - Image ${index + 2}`}
+                      fill
+                      className="object-cover transition-transform duration-700 group-hover:scale-105"
+                      width={400}
+                      height={300}
+                    />
+                  ) : (
+                    <Image
+                      src={image || "/placeholder.svg"}
+                      alt={`${property.title} - Image ${index + 2}`}
+                      fill
+                      className="object-cover transition-transform duration-700 group-hover:scale-105"
+                    />
+                  )}
                   <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-500" />
                   {index === 3 && allImages.length > 5 && (
                     <div className="absolute inset-0 flex items-center justify-center bg-black/50 backdrop-blur-[2px]">
@@ -285,12 +316,23 @@ export function PropertyGallery({ property }: PropertyGalleryProps) {
             className="relative w-full max-w-5xl aspect-4/3 mx-4 md:mx-6 z-[105]"
             onClick={(e) => e.stopPropagation()}
           >
-            <Image
-              src={allImages[lightboxIndex] || "/placeholder.svg"}
-              alt={`${property.title} - Image ${lightboxIndex + 1}`}
-              fill
-              className="object-contain"
-            />
+            {useImageKit ? (
+              <ImageKitImage
+                path={allImages[lightboxIndex] || ""}
+                alt={`${property.title} - Image ${lightboxIndex + 1}`}
+                fill
+                className="object-contain"
+                width={1200}
+                height={900}
+              />
+            ) : (
+              <Image
+                src={allImages[lightboxIndex] || "/placeholder.svg"}
+                alt={`${property.title} - Image ${lightboxIndex + 1}`}
+                fill
+                className="object-contain"
+              />
+            )}
           </div>
 
           <div className="absolute bottom-4 md:bottom-6 left-1/2 -translate-x-1/2 px-4 py-1.5 md:py-2 bg-white/10 backdrop-blur-md rounded-full text-white text-xs md:text-sm tracking-wider z-[110] border border-white/20">
@@ -408,13 +450,14 @@ export function PropertyGallery({ property }: PropertyGalleryProps) {
             onClick={(e) => e.stopPropagation()}
           >
             <iframe
-              src={`https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3024!2d${property.mapLongitude}!3d${property.mapLatitude}!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zNDHCsDE0JzA0LjIiTiAxwrA0OCc0NC4zIkU!5e0!3m2!1sen!2sus!4v1234567890123!5m2!1sen!2sus`}
+              src={mapEmbedSrc}
               width="100%"
               height="100%"
               style={{ border: 0 }}
               allowFullScreen
               loading="lazy"
               referrerPolicy="no-referrer-when-downgrade"
+              title={`${t.property.buttons.map} — ${property.title}`}
             />
           </div>
         </div>

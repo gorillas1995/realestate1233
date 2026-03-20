@@ -185,3 +185,37 @@ html {
 ::selection {
   background-color: hsl(210 70% 45% / 0.3);
 }
+
+/* Property amenities carousel: subtle lateral nudge so swipe affordance reads on mobile */
+@keyframes amenities-hint-nudge-left {
+  0%,
+  100% {
+    transform: translateX(0);
+    opacity: 0.55;
+  }
+  50% {
+    transform: translateX(-5px);
+    opacity: 1;
+  }
+}
+
+@keyframes amenities-hint-nudge-right {
+  0%,
+  100% {
+    transform: translateX(0);
+    opacity: 0.55;
+  }
+  50% {
+    transform: translateX(5px);
+    opacity: 1;
+  }
+}
+
+.animate-amenities-hint-left {
+  animation: amenities-hint-nudge-left 1.35s ease-in-out infinite;
+}
+
+.animate-amenities-hint-right {
+  animation: amenities-hint-nudge-right 1.35s ease-in-out infinite;
+  animation-delay: 0.15s;
+}

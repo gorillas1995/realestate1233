@@ -1,8 +1,10 @@
 "use client";
 
 import type React from "react";
+import Link from "next/link";
 import { useState } from "react";
 import { ArrowRight, Check } from "lucide-react";
+import { useLanguage } from "@/contexts/language-context";
 
 const FORMSYNC_ENDPOINT = "https://api.formsync.app/v1/s/FE0d059";
 
@@ -35,10 +37,15 @@ const initialState: FormState = {
 };
 
 export function ContactForm() {
+  const { t } = useLanguage();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [form, setForm] = useState<FormState>(initialState);
+  /** GDPR-aligned: required before processing the enquiry */
+  const [privacyAccepted, setPrivacyAccepted] = useState(false);
+  /** Optional marketing — default off */
+  const [marketingAccepted, setMarketingAccepted] = useState(false);
 
   const onChange =
     (key: keyof FormState) =>
@@ -55,6 +62,11 @@ export function ContactForm() {
     setError(null);
     setIsSubmitting(true);
 
+    if (!privacyAccepted) {
+      setIsSubmitting(false);
+      return;
+    }
+
     try {
       const res = await fetch(FORMSYNC_ENDPOINT, {
         method: "POST",
@@ -66,6 +78,8 @@ export function ContactForm() {
           ...form,
           name: `${form.firstName} ${form.lastName}`.trim(),
           source: "website-contact-form",
+          privacyConsent: true,
+          marketingConsent: marketingAccepted,
         }),
       });
 
@@ -93,11 +107,10 @@ export function ContactForm() {
         <div className="w-16 h-16 mx-auto mb-6 flex items-center justify-center bg-primary-foreground rounded-full">
           <Check className="w-8 h-8 text-primary" />
         </div>
-        <h3 className="text-2xl font-serif font-medium mb-4">Message Sent</h3>
-        <p className="text-primary-foreground/80">
-          Thank you for reaching out. A member of our team will be in touch with
-          you shortly.
-        </p>
+        <h3 className="text-2xl font-serif font-medium mb-4">
+          {t.contact.form.sentTitle}
+        </h3>
+        <p className="text-primary-foreground/80">{t.contact.form.sentBody}</p>
       </div>
     );
   }
@@ -291,19 +304,52 @@ export function ContactForm() {
         className={`${inputClassName} resize-none`}
       />
 
+      {/* Privacy: required explicit consent to process enquiry (GDPR Art. 6 / transparency) */}
+      <label className="flex cursor-pointer items-start gap-3 text-left text-sm text-primary-foreground/95">
+        <input
+          type="checkbox"
+          name="privacyConsent"
+          checked={privacyAccepted}
+          onChange={(e) => setPrivacyAccepted(e.target.checked)}
+          className="mt-1 size-4 shrink-0 rounded border-primary-foreground/40 text-primary focus:ring-primary-foreground/30"
+        />
+        <span className="leading-snug">
+          {t.contact.form.privacyConsentBeforeLink}
+          <Link
+            href="/privacy"
+            className="font-semibold underline underline-offset-2 hover:text-white"
+          >
+            {t.footer.privacyPolicy}
+          </Link>
+          {t.contact.form.privacyConsentAfterLink}
+        </span>
+      </label>
+
+      {/* Optional marketing consent — unchecked by default */}
+      <label className="flex cursor-pointer items-start gap-3 text-left text-sm text-primary-foreground/90">
+        <input
+          type="checkbox"
+          name="marketingConsent"
+          checked={marketingAccepted}
+          onChange={(e) => setMarketingAccepted(e.target.checked)}
+          className="mt-1 size-4 shrink-0 rounded border-primary-foreground/40 text-primary focus:ring-primary-foreground/30"
+        />
+        <span className="leading-snug">{t.contact.form.marketingConsent}</span>
+      </label>
+
       <button
         type="submit"
-        disabled={isSubmitting}
+        disabled={isSubmitting || !privacyAccepted}
         className="w-full flex items-center justify-center gap-3 px-8 py-4 bg-primary-foreground text-primary font-medium tracking-wide rounded-full transition-all duration-300 hover:bg-primary-foreground/90 disabled:opacity-70 disabled:cursor-not-allowed"
       >
         {isSubmitting ? (
           <>
             <div className="w-5 h-5 border-2 border-primary/30 border-t-primary rounded-full animate-spin" />
-            Sending...
+            {t.contact.form.sending}
           </>
         ) : (
           <>
-            Submit
+            {t.contact.form.submit}
             <ArrowRight className="w-4 h-4" />
           </>
         )}

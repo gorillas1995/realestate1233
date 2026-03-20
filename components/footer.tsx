@@ -2,9 +2,11 @@
 
 import Link from "next/link";
 import { useLanguage } from "@/contexts/language-context";
+import { useConsent } from "@/contexts/consent-context";
 
 export function Footer() {
   const { t } = useLanguage();
+  const { openPreferences } = useConsent();
   return (
     <footer className="border-t border-border bg-white">
       <div className="container mx-auto px-4 lg:px-8 py-16 lg:py-24">
@@ -21,7 +23,9 @@ export function Footer() {
 
           {/* Quick Links */}
           <div>
-            <h4 className="text-sm font-semibold tracking-wider uppercase mb-6 text-foreground">{t.footer.quickLinks}</h4>
+            <h4 className="text-sm font-semibold tracking-wider uppercase mb-6 text-foreground">
+              {t.footer.quickLinks}
+            </h4>
             <ul className="space-y-4">
               <li>
                 <Link
@@ -66,37 +70,18 @@ export function Footer() {
             </ul>
           </div>
 
-          {/* Property Types */}
-          <div>
-            <h4 className="text-sm font-semibold tracking-wider uppercase mb-6 text-foreground">{t.footer.properties}</h4>
-            <ul className="space-y-4">
-              {["Luxury Houses", "Penthouses", "Estates", "Private Islands", "Investment"].map((type) => (
-                <li key={type}>
-                  <Link
-                    href="/listings"
-                    className="text-muted-foreground text-sm hover:text-primary transition-colors duration-300"
-                  >
-                    {type}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
-
           {/* Contact */}
           <div>
-            <h4 className="text-sm font-semibold tracking-wider uppercase mb-6 text-foreground">{t.footer.contact}</h4>
+            <h4 className="text-sm font-semibold tracking-wider uppercase mb-6 text-foreground">
+              {t.footer.contact}
+            </h4>
             <ul className="space-y-4 text-sm text-muted-foreground">
-              <li>123 Luxury Avenue</li>
-              <li>Monaco, MC 98000</li>
               <li className="pt-2">
-                <a href="mailto:contact@urbanestate.com" className="hover:text-primary transition-colors duration-300">
-                  contact@urbanestate.com
-                </a>
-              </li>
-              <li>
-                <a href="tel:+377123456789" className="hover:text-primary transition-colors duration-300">
-                  +377 123 456 789
+                <a
+                  href="mailto:contact@sigets-capital.com"
+                  className="hover:text-primary transition-colors duration-300"
+                >
+                  contact@sigets-capital.com
                 </a>
               </li>
             </ul>
@@ -108,16 +93,29 @@ export function Footer() {
           <p className="text-muted-foreground text-sm">
             © {new Date().getFullYear()} Urban Estate. {t.footer.rightsReserved}
           </p>
-          <div className="flex items-center gap-6">
-            <Link href="#" className="text-muted-foreground text-sm hover:text-primary transition-colors duration-300">
+          <div className="flex flex-wrap items-center justify-center gap-4 md:gap-6">
+            <Link
+              href="/privacy"
+              className="text-muted-foreground text-sm hover:text-primary transition-colors duration-300"
+            >
               {t.footer.privacyPolicy}
             </Link>
-            <Link href="#" className="text-muted-foreground text-sm hover:text-primary transition-colors duration-300">
+            <Link
+              href="/terms"
+              className="text-muted-foreground text-sm hover:text-primary transition-colors duration-300"
+            >
               {t.footer.termsOfService}
             </Link>
+            <button
+              type="button"
+              onClick={openPreferences}
+              className="text-muted-foreground text-sm hover:text-primary transition-colors duration-300"
+            >
+              {t.footer.cookieSettings}
+            </button>
           </div>
         </div>
       </div>
     </footer>
-  )
+  );
 }

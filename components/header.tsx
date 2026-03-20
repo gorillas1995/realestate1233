@@ -18,8 +18,8 @@ export function Header() {
     { href: "/listings", label: t.nav.listings },
     {
       href: "/interior-design",
-      label: t.nav.interiorDesign ?? "INTERIOR DESIGN",
-    }, // new link, fallback if t.nav.interiorDesign is not available
+      label: t.nav.interiorDesign,
+    },
     { href: "/gallery", label: t.nav.gallery },
     { href: "/about", label: t.nav.about },
     { href: "/contact", label: t.nav.contact },

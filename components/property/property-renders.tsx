@@ -12,7 +12,8 @@ interface PropertyRendersProps {
 
 export function PropertyRenders({ property }: PropertyRendersProps) {
   const { t } = useLanguage()
-  const imageKitImages = property.imageKitGallery || []
+  // Use imageKitRenders (all images) for "Experience Every Detail" / View all renders section
+  const imageKitImages = property.imageKitRenders || property.imageKitGallery || []
   const [isVisible, setIsVisible] = useState(false)
   const [showModal, setShowModal] = useState(false)
   const [currentIndex, setCurrentIndex] = useState(0)

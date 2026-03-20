@@ -1,61 +1,99 @@
 "use client";
 
+/**
+ * Listings index: hero, sticky filter chips, luxury property cards, FAQ — mobile-first layout and tokens.
+ */
+
 import { useState, useMemo, useEffect, useRef } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { properties, faqs } from "@/lib/data";
 import { FAQAccordion } from "@/components/faq-accordion";
-import { ArrowRight } from "lucide-react";
 import Link from "next/link";
-import Image from "next/image";
 import { useLanguage } from "@/contexts/language-context";
+import { ListingsHero } from "@/components/listings/listings-hero";
+import {
+  ListingsCategoryBar,
+  type ListingCategory,
+  type CategoryChip,
+} from "@/components/listings/listings-category-bar";
+import { ListingsPropertyCard } from "@/components/listings/listings-property-card";
 
-type Category = "all" | "house" | "apartment" | "land";
+function isListingCategory(v: string | null): v is ListingCategory {
+  return v === "all" || v === "house" || v === "apartment" || v === "land";
+}
 
 export function ListingsContent() {
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
   const router = useRouter();
   const searchParams = useSearchParams();
 
-  const categories: { value: Category; label: string }[] = [
-    { value: "house", label: t.listings.houses },
-  ];
-
-  const initialCategory = (searchParams.get("category") as Category) || "all";
+  const paramCat = searchParams.get("category");
+  const initialCategory: ListingCategory =
+    paramCat && isListingCategory(paramCat) ? paramCat : "all";
 
   const [activeCategory, setActiveCategory] =
-    useState<Category>(initialCategory);
+    useState<ListingCategory>(initialCategory);
   const [isVisible, setIsVisible] = useState(false);
   const [headerVisible, setHeaderVisible] = useState(false);
   const [loading, setLoading] = useState(false);
 
   const sectionRef = useRef<HTMLElement>(null);
 
-  /* Header animation */
   useEffect(() => {
     setHeaderVisible(true);
   }, []);
 
-  /* Intersection animation */
+  useEffect(() => {
+    const cat = searchParams.get("category");
+    const next: ListingCategory =
+      cat && isListingCategory(cat) ? cat : "all";
+    setActiveCategory(next);
+  }, [searchParams]);
+
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => entry.isIntersecting && setIsVisible(true),
-      { threshold: 0.1 },
+      { threshold: 0.08 },
     );
-
     if (sectionRef.current) observer.observe(sectionRef.current);
     return () => observer.disconnect();
   }, []);
 
-  /* URL sync + skeleton trigger */
-  const handleCategoryChange = (cat: Category) => {
+  const categoryChips: CategoryChip[] = useMemo(() => {
+    let house = 0;
+    let apartment = 0;
+    let land = 0;
+    for (const p of properties) {
+      if (p.category === "house") house++;
+      else if (p.category === "apartment") apartment++;
+      else land++;
+    }
+    const items: CategoryChip[] = [
+      { value: "all", label: t.listings.all, count: properties.length },
+    ];
+    if (house > 0) {
+      items.push({ value: "house", label: t.listings.houses, count: house });
+    }
+    if (apartment > 0) {
+      items.push({
+        value: "apartment",
+        label: t.listings.apartments,
+        count: apartment,
+      });
+    }
+    if (land > 0) {
+      items.push({ value: "land", label: t.listings.lands, count: land });
+    }
+    return items;
+  }, [language, t]);
+
+  const handleCategoryChange = (cat: ListingCategory) => {
     setLoading(true);
     setActiveCategory(cat);
-
     router.push(cat === "all" ? "/listings" : `/listings?category=${cat}`, {
       scroll: false,
     });
-
-    setTimeout(() => setLoading(false), 400);
+    window.setTimeout(() => setLoading(false), 380);
   };
 
   const filteredProperties = useMemo(() => {
@@ -63,143 +101,82 @@ export function ListingsContent() {
     return properties.filter((p) => p.category === activeCategory);
   }, [activeCategory]);
 
+  const skeletonCount = Math.min(6, Math.max(3, filteredProperties.length));
+
   return (
-    <>
-      {/* HEADER */}
+    <div className="overflow-x-clip">
+      <ListingsHero
+        resultCount={filteredProperties.length}
+        headerVisible={headerVisible}
+      />
+
+      <ListingsCategoryBar
+        categories={categoryChips}
+        activeCategory={activeCategory}
+        onCategoryChange={handleCategoryChange}
+      />
+
       <section
-        className={`pb-12 transition-all duration-700 ${
-          headerVisible ? "animate-slide-up" : "opacity-0"
-        }`}
+        ref={sectionRef}
+        className="py-10 sm:py-14 lg:py-20"
+        aria-label={t.listings.title}
       >
-        <div className="container mx-auto px-4 lg:px-8">
-          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-4">
-            {t.listings.title}
-          </h1>
-          <p className="text-muted-foreground text-lg max-w-2xl">
-            {t.listings.description}
-          </p>
-        </div>
-      </section>
-
-      {/* FILTER BAR */}
-      <section className="bg-background/80 backdrop-blur-md border-b border-border">
-        <div className="container mx-auto px-4 lg:px-8 py-6">
-          <div className="flex justify-center gap-4 flex-wrap">
-            {categories.map((category) => {
-              const isActive = activeCategory === category.value;
-
-              return (
-                <button
-                  key={category.value}
-                  onClick={() => handleCategoryChange(category.value)}
-                  className={`group flex items-center justify-between gap-4 px-6 py-3 min-w-[170px] rounded-xl transition-all duration-300 ${
-                    isActive
-                      ? "bg-[#428BC7] text-white shadow-lg"
-                      : "bg-[#F1F3F4] text-foreground hover:shadow-md hover:-translate-y-0.5"
-                  }`}
-                >
-                  <span className="font-semibold tracking-wide text-sm">
-                    {category.label}
-                  </span>
-
-                  <span
-                    className={`flex items-center justify-center w-7 h-7 rounded-full transition-all duration-300 ${
-                      isActive
-                        ? "bg-white translate-x-0 opacity-100"
-                        : "bg-[#428BC7] translate-x-2 opacity-0 group-hover:opacity-100"
-                    }`}
-                  >
-                    <ArrowRight
-                      className={`w-4 h-4 ${
-                        isActive ? "text-black" : "text-white"
-                      }`}
-                    />
-                  </span>
-                </button>
-              );
-            })}
-          </div>
-        </div>
-      </section>
-
-      {/* LISTINGS GRID */}
-      <section ref={sectionRef} className="py-12 lg:py-20">
-        <div className="w-full px-2 sm:px-4 lg:px-6">
+        <div className="container mx-auto max-w-7xl px-4 lg:px-8">
           <div
-            className={`grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-3 lg:gap-5 transition-all duration-700 ${
+            className={`grid grid-cols-1 gap-6 sm:grid-cols-2 sm:gap-7 xl:grid-cols-3 xl:gap-8 transition-all duration-700 motion-reduce:transition-none ${
               isVisible ? "animate-pop-in" : "opacity-0"
             }`}
           >
-            {(loading ? Array.from({ length: 9 }) : filteredProperties).map(
-              (property: any, index: number) =>
-                loading ? (
+            {loading
+              ? Array.from({ length: skeletonCount }).map((_, index) => (
                   <div
-                    key={index}
-                    className="rounded-md border border-border bg-white shadow-sm"
+                    key={`sk-${index}`}
+                    className="overflow-hidden rounded-2xl border border-border/60 bg-card shadow-sm"
                   >
-                    <div className="h-48 bg-secondary/40 animate-pulse rounded-t-md" />
-                    <div className="px-4 py-3 bg-[#F1F3F4] h-10" />
+                    <div className="aspect-3/4 animate-pulse bg-secondary/50 sm:aspect-5/6" />
+                    <div className="h-16 animate-pulse bg-secondary/30" />
                   </div>
-                ) : (
-                  <Link
+                ))
+              : filteredProperties.map((property, index) => (
+                  <ListingsPropertyCard
                     key={property.id}
-                    href={`/property/${property.slug}`}
-                    className="group rounded-md border border-border bg-white shadow-sm hover:-translate-y-1 hover:shadow-xl transition-all duration-300"
-                    style={{ animationDelay: `${index * 60}ms` }}
-                  >
-                    {/* IMAGE — auto height, fully visible */}
-                    <div className="w-full bg-white flex items-center justify-center p-2">
-                      <Image
-                        src={property.image || "/placeholder.svg"}
-                        alt={property.title}
-                        width={800}
-                        height={600}
-                        className="w-full h-auto object-contain"
-                        sizes="(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 33vw"
-                      />
-                    </div>
-
-                    {/* FOOTER */}
-                    <div className="px-4 py-3 bg-[#F1F3F4] flex items-center justify-between">
-                      <span className="text-base font-semibold truncate">
-                        {property.title}
-                      </span>
-                      <span className="text-primary font-semibold whitespace-nowrap">
-                        {property.price}
-                      </span>
-                    </div>
-                  </Link>
-                ),
-            )}
+                    property={property}
+                    animationDelayMs={index * 50}
+                  />
+                ))}
           </div>
 
           {!loading && filteredProperties.length === 0 && (
-            <div className="text-center py-24">
-              <p className="text-muted-foreground text-lg">
+            <div className="mx-auto max-w-md rounded-2xl border border-border/80 bg-secondary/30 px-8 py-16 text-center">
+              <p className="text-lg font-medium text-foreground">
                 {t.listings.noProperties}
               </p>
+              <Link
+                href="/contact"
+                className="mt-6 inline-flex min-h-12 items-center justify-center rounded-full bg-primary px-8 py-3 text-sm font-semibold text-primary-foreground transition-colors hover:bg-primary/90"
+              >
+                {t.nav.contact}
+              </Link>
             </div>
           )}
         </div>
       </section>
 
-      {/* FAQ */}
-      <section className="py-20 lg:py-28 bg-secondary/30">
-        <div className="container mx-auto px-4 lg:px-8">
-          <div className="text-center max-w-2xl mx-auto mb-14">
-            <span className="text-primary text-sm font-medium tracking-[0.2em] uppercase mb-4 block">
+      <section className="border-t border-border/60 bg-linear-to-b from-secondary/40 to-secondary/20 py-16 lg:py-24">
+        <div className="container mx-auto max-w-6xl px-4 lg:px-8">
+          <div className="mx-auto mb-12 max-w-2xl text-center lg:mb-16">
+            <span className="text-[11px] font-semibold uppercase tracking-[0.3em] text-primary">
               {t.listings.faq.title}
             </span>
-            <p className="text-muted-foreground">
+            <p className="mt-4 text-muted-foreground sm:text-lg">
               {t.listings.faq.description}
             </p>
           </div>
-
-          <div className="max-w-3xl mx-auto">
+          <div className="mx-auto max-w-3xl">
             <FAQAccordion faqs={faqs} />
           </div>
         </div>
       </section>
-    </>
+    </div>
   );
 }

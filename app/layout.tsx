@@ -1,12 +1,12 @@
 import type React from "react"
 import type { Metadata } from "next"
 import { Inter } from "next/font/google"
-import { Analytics } from "@vercel/analytics/next"
 import { Header } from "@/components/header"
 import { Footer } from "@/components/footer"
 import { ScrollToTop } from "@/components/scroll-to-top"
 import { LanguageProvider } from "@/contexts/language-context"
 import { LanguageSwitcher } from "@/components/language-switcher"
+import { ConsentAnalyticsShell } from "@/components/consent/consent-analytics-shell"
 import "./globals.css"
 
 // Inter font configuration - optimized for performance with Next.js font optimization
@@ -32,12 +32,13 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${inter.variable} font-sans antialiased bg-white text-foreground`}>
         <LanguageProvider>
-          <ScrollToTop />
-          <LanguageSwitcher />
-          <Header />
-          <main className="min-h-screen">{children}</main>
-          <Footer />
-          <Analytics />
+          <ConsentAnalyticsShell>
+            <ScrollToTop />
+            <LanguageSwitcher />
+            <Header />
+            <main className="min-h-screen">{children}</main>
+            <Footer />
+          </ConsentAnalyticsShell>
         </LanguageProvider>
       </body>
     </html>
