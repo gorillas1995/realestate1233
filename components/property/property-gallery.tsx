@@ -7,6 +7,7 @@ import { ArrowLeft, X, ChevronLeft, ChevronRight, FileText, Box, Play, MapPin, I
 import type { Property } from "@/lib/data"
 import { useLanguage } from "@/contexts/language-context"
 import ImageKitImage from "@/components/ImageKitImage"
+import { getYouTubeEmbedSrc } from "@/lib/youtube-embed"
 
 interface PropertyGalleryProps {
   property: Property
@@ -20,11 +21,16 @@ export function PropertyGallery({ property }: PropertyGalleryProps) {
     property.mapLatitude != null && property.mapLongitude != null
       ? `https://www.google.com/maps?q=${property.mapLatitude},${property.mapLongitude}&z=17&hl=${language === "es" ? "es" : "en"}&output=embed`
       : ""
+  const videoEmbedSrc = property.videoUrl
+    ? getYouTubeEmbedSrc(property.videoUrl)
+    : null
+
   const [currentImageIndex, setCurrentImageIndex] = useState(0)
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null)
   const [showFloorPlans, setShowFloorPlans] = useState(false)
   const [currentFloorPlanIndex, setCurrentFloorPlanIndex] = useState(0)
   const [showMap, setShowMap] = useState(false)
+  const [showVideo, setShowVideo] = useState(false)
   const [showVirtualTour, setShowVirtualTour] = useState(false)
   // Use ImageKit gallery when available; otherwise fall back to image + gallery
   const useImageKit = property.imageKitGallery && property.imageKitGallery.length > 0
@@ -55,21 +61,30 @@ export function PropertyGallery({ property }: PropertyGalleryProps) {
         if (lightboxIndex !== null) closeLightbox()
         if (showFloorPlans) setShowFloorPlans(false)
         if (showMap) setShowMap(false)
+        if (showVideo) setShowVideo(false)
         if (showVirtualTour) setShowVirtualTour(false)
       }
     }
     window.addEventListener("keydown", handleKeyDown)
     return () => window.removeEventListener("keydown", handleKeyDown)
-  }, [lightboxIndex, showFloorPlans, showMap, showVirtualTour])
+  }, [lightboxIndex, showFloorPlans, showMap, showVideo, showVirtualTour])
 
   useEffect(() => {
-    if (lightboxIndex !== null || showFloorPlans || showMap || showVirtualTour) {
+    if (
+      lightboxIndex !== null ||
+      showFloorPlans ||
+      showMap ||
+      showVideo ||
+      showVirtualTour
+    ) {
       document.body.style.overflow = "hidden"
     } else {
       document.body.style.overflow = "unset"
     }
-    return () => { document.body.style.overflow = "unset" }
-  }, [lightboxIndex, showFloorPlans, showMap, showVirtualTour])
+    return () => {
+      document.body.style.overflow = "unset"
+    }
+  }, [lightboxIndex, showFloorPlans, showMap, showVideo, showVirtualTour])
 
   const actionButtons = [
     {
@@ -96,10 +111,10 @@ export function PropertyGallery({ property }: PropertyGalleryProps) {
     },
     {
       key: "video",
-      show: !!property.videoUrl,
+      show: !!videoEmbedSrc,
       icon: Play,
       label: t.property.buttons.video,
-      href: property.videoUrl,
+      onClick: () => setShowVideo(true),
     },
     {
       key: "map",
@@ -458,6 +473,42 @@ export function PropertyGallery({ property }: PropertyGalleryProps) {
               loading="lazy"
               referrerPolicy="no-referrer-when-downgrade"
               title={`${t.property.buttons.map} — ${property.title}`}
+            />
+          </div>
+        </div>
+      )}
+
+      {/* ─── Video (YouTube) Modal — Shorts-friendly 9:16 frame ─── */}
+      {showVideo && videoEmbedSrc && (
+        <div
+          className="fixed inset-0 z-[100] flex items-center justify-center bg-black/95 backdrop-blur-sm"
+          onClick={() => setShowVideo(false)}
+        >
+          <button
+            onClick={(e) => {
+              e.stopPropagation()
+              setShowVideo(false)
+            }}
+            className="absolute top-4 right-4 z-[110] rounded-full border border-white/20 bg-white/10 p-2.5 backdrop-blur-md transition-all duration-300 hover:bg-white/20 md:top-6 md:right-6 md:p-3"
+            aria-label="Close"
+          >
+            <X className="h-6 w-6 text-white md:h-8 md:w-8" />
+          </button>
+
+          <div
+            className="relative z-[105] mx-4 aspect-9/16 w-full max-h-[85vh] max-w-[min(100%,calc(85vh*9/16))] overflow-hidden rounded-xl border border-white/20 md:rounded-2xl"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <iframe
+              src={`${videoEmbedSrc}?playsinline=1`}
+              width="100%"
+              height="100%"
+              className="absolute inset-0 h-full w-full"
+              style={{ border: 0 }}
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              allowFullScreen
+              loading="lazy"
+              title={`${t.property.buttons.video} — ${property.title}`}
             />
           </div>
         </div>
