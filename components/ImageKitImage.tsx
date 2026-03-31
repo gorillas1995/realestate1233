@@ -12,8 +12,14 @@ function buildImageKitUrl(
   format = "webp"
 ): string {
   const pathClean = path.startsWith("/") ? path.slice(1) : path;
+  // Encode each path segment so spaces and special characters resolve (e.g. xirgu-97-1/Scene 192.png)
+  const encodedPath = pathClean
+    .split("/")
+    .filter(Boolean)
+    .map((segment) => encodeURIComponent(segment))
+    .join("/");
   const endpoint = urlEndpoint.endsWith("/") ? urlEndpoint : `${urlEndpoint}/`;
-  return `${endpoint}${pathClean}?tr=w-${width},h-${height},q-${quality},f-${format}`;
+  return `${endpoint}${encodedPath}?tr=w-${width},h-${height},q-${quality},f-${format}`;
 }
 
 export default function ImageKitImage({

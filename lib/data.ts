@@ -32,6 +32,8 @@ export interface Property {
   floorPlans?: string[]; // Array of floor plan images
   virtualTourUrl?: string;
   videoUrl?: string;
+  /** True: show Video control; opens placeholder until videoUrl is set (e.g. new tour pending). */
+  videoPending?: boolean;
   /** WGS84 — used for property gallery map modal (see OSM Nominatim notes per listing). */
   mapLatitude?: number;
   mapLongitude?: number;
@@ -61,13 +63,94 @@ const LA_PLANA_AMENITIES = [
   "Interior can be delivered fully furnished as per renders (on request)",
 ];
 
+/** Standard villa price; Brisa (Xirgu 49) is double — twin house on double plot. */
+const PRICE_EUR_STANDARD = "€2,700,000";
+const PRICE_EUR_BRISA_DOUBLE = "€5,400,000";
+
+/** La Plana Horizon (Xirgu 97) — ImageKit folder `xirgu-97-1`; order matches client delivery. */
+const LA_PLANA_HORIZON_IMAGEKIT_PATHS: string[] = [
+  "xirgu-97-1/Scene 192.png",
+  "xirgu-97-1/Scene 86.png",
+  "xirgu-97-1/Scene 107.png",
+  "xirgu-97-1/Scene 120.png",
+  "xirgu-97-1/49street.png",
+  "xirgu-97-1/Scene 174.png",
+  "xirgu-97-1/Scene 82.png",
+  "xirgu-97-1/Scene 90.png",
+  "xirgu-97-1/Scene 170.png",
+  "xirgu-97-1/Pan_timelapse.png",
+  "xirgu-97-1/Scene 167.png",
+  "xirgu-97-1/Scene 199.png",
+  "xirgu-97-1/moon3.png",
+  "xirgu-97-1/moon.png",
+  "xirgu-97-1/Scene 193.png",
+  "xirgu-97-1/Scene 108.png",
+  "xirgu-97-1/nightmoon1.png",
+  "xirgu-97-1/Roughtness.png",
+  "xirgu-97-1/Scene 165.png",
+  "xirgu-97-1/Scene 191.png",
+  "xirgu-97-1/Scene 173.png",
+  "xirgu-97-1/tea.png",
+  "xirgu-97-1/Entrace_Door_02.png",
+  "xirgu-97-1/Balcony3.png",
+  "xirgu-97-1/Balcony1 .png",
+  "xirgu-97-1/mooooon.png",
+  "xirgu-97-1/Balcony2.png",
+];
+
+/** Floor plans from ImageKit CSV export (`/schite-case/*`). */
+const PLANS_XIRGU_13: string[] = [
+  "https://ik.imagekit.io/sigetscapital/schite-case/xirgu13-1.png?updatedAt=1774962352176",
+  "https://ik.imagekit.io/sigetscapital/schite-case/xirgu13-2.png?updatedAt=1774962352036",
+  "https://ik.imagekit.io/sigetscapital/schite-case/xirgu13-3.png?updatedAt=1774962352153",
+  "https://ik.imagekit.io/sigetscapital/schite-case/xirgu13-4.png?updatedAt=1774962352083",
+];
+
+const PLANS_XIRGU_69: string[] = [
+  "https://ik.imagekit.io/sigetscapital/schite-case/xirgu69-1.png?updatedAt=1774962352152",
+  "https://ik.imagekit.io/sigetscapital/schite-case/xirgu69-2.png?updatedAt=1774962352146",
+  "https://ik.imagekit.io/sigetscapital/schite-case/xirgu69-3.png?updatedAt=1774962352190",
+  "https://ik.imagekit.io/sigetscapital/schite-case/xirgu69-4.png?updatedAt=1774962352094",
+];
+
+const PLANS_XIRGU_71: string[] = [
+  "https://ik.imagekit.io/sigetscapital/schite-case/xirgu71-1.png?updatedAt=1774962352023",
+  "https://ik.imagekit.io/sigetscapital/schite-case/xirgu71-2.png?updatedAt=1774962351965",
+  "https://ik.imagekit.io/sigetscapital/schite-case/xirgu71-3.png?updatedAt=1774962352093",
+];
+
+const PLANS_XIRGU_73: string[] = [
+  "https://ik.imagekit.io/sigetscapital/schite-case/xirgu73-1.png?updatedAt=1774962352046",
+  "https://ik.imagekit.io/sigetscapital/schite-case/xirgu73-2.png?updatedAt=1774962352145",
+  "https://ik.imagekit.io/sigetscapital/schite-case/xirgu73-3.png?updatedAt=1774962352185",
+  "https://ik.imagekit.io/sigetscapital/schite-case/xirgu73-4.png?updatedAt=1774962352109",
+  "https://ik.imagekit.io/sigetscapital/schite-case/xirgu73-5.png?updatedAt=1774962352187",
+];
+
+const PLANS_XIRGU_97: string[] = [
+  "https://ik.imagekit.io/sigetscapital/schite-case/xirgu97-1.png?updatedAt=1774962352168",
+  "https://ik.imagekit.io/sigetscapital/schite-case/xirgu97-2.png?updatedAt=1774962352172",
+  "https://ik.imagekit.io/sigetscapital/schite-case/xirgu97-3.png?updatedAt=1774962352107",
+  "https://ik.imagekit.io/sigetscapital/schite-case/xirgu97-4.png?updatedAt=1774962352131",
+  "https://ik.imagekit.io/sigetscapital/schite-case/xirgu97-5.png?updatedAt=1774962352019",
+  "https://ik.imagekit.io/sigetscapital/schite-case/xirgu97-6.png?updatedAt=1774962352101",
+];
+
+const PLANS_GARAF_45: string[] = [
+  "https://ik.imagekit.io/sigetscapital/schite-case/garaf45-1.png?updatedAt=1774962352055",
+  "https://ik.imagekit.io/sigetscapital/schite-case/garaf45-2.png?updatedAt=1774962352116",
+  "https://ik.imagekit.io/sigetscapital/schite-case/garaf45-3.png?updatedAt=1774962352164",
+  "https://ik.imagekit.io/sigetscapital/schite-case/garaf45-4.png?updatedAt=1774962352112",
+  "https://ik.imagekit.io/sigetscapital/schite-case/garaf45-5.png?updatedAt=1774962352025",
+];
+
 export const properties: Property[] = [
   // 1. La Plana Claror - Xirgu-13 (no visado PDF in current set — plot + listing metrics only)
   {
     id: "1",
     title: "La Plana Claror",
     slug: "la-plana-claror-xirgu-13",
-    price: "On request",
+    price: PRICE_EUR_STANDARD,
     category: "house",
     videoUrl: "https://www.youtube.com/shorts/mZVFtgbcTec",
     image: "/la-plana-claror-xirgu-13/4K_Scene 17.png",
@@ -83,6 +166,7 @@ export const properties: Property[] = [
       "Un hogar definido por la luz y la apertura. Los espacios fluyen naturalmente, y cada rincón transmite claridad, equilibrio y una sensación de nuevo comienzo.",
     amenities: LA_PLANA_AMENITIES,
     gallery: [],
+    floorPlans: PLANS_XIRGU_13,
     // OSM Nominatim: Carrer de Margarida Xirgu, 13, Sitges
     mapLatitude: 41.2375029,
     mapLongitude: 1.7898252,
@@ -113,7 +197,7 @@ export const properties: Property[] = [
     id: "2",
     title: "La Plana Brisa",
     slug: "la-plana-brisa-xirgu-49",
-    price: "On request",
+    price: PRICE_EUR_BRISA_DOUBLE,
     category: "house",
     videoUrl: "https://www.youtube.com/shorts/izZNJUzRGlY",
     image: "/la-plana-brisa-xirgu-49/4K_Scene 169.png",
@@ -166,7 +250,7 @@ export const properties: Property[] = [
     id: "3",
     title: "La Plana Serena",
     slug: "la-plana-serena-xirgu-65",
-    price: "On request",
+    price: PRICE_EUR_STANDARD,
     category: "house",
     videoUrl: "https://www.youtube.com/shorts/zhAzwHmgDe0",
     image: "/la-plana-serena-xirgu-65/4K_Image.png",
@@ -217,7 +301,7 @@ export const properties: Property[] = [
     id: "4",
     title: "La Plana Alba",
     slug: "la-plana-alba-xirgu-67",
-    price: "On request",
+    price: PRICE_EUR_STANDARD,
     category: "house",
     videoUrl: "https://www.youtube.com/shorts/Le9Ac_M5pXY",
     image: "/la-plana-alba-xirgu-67/4K_Scene 117.png",
@@ -263,16 +347,17 @@ export const properties: Property[] = [
       "/la-plana-alba-xirgu-67/9_Scene 128.png",
     ],
   },
-  // 5. La Plana Aura - Xirgu-67 (same plot typology as Alba — XIRGU 67 VISADO.pdf)
+  // 5. La Plana Aura — Xirgu 69 (media under la-plana-aura-xirgu-69 folder)
   {
     id: "5",
     title: "La Plana Aura",
-    slug: "la-plana-aura-xirgu-67",
-    price: "On request",
+    slug: "la-plana-aura-xirgu-69",
+    price: PRICE_EUR_STANDARD,
     category: "house",
+    videoUrl: "https://www.youtube.com/shorts/i_0bsuPLuN0",
     image: "/la-plana-aura-xirgu-69/4K_Scene 103.png",
-    location: "C/ Margarida Xirgu, 67 · Coastal residence",
-    address: "C/ Margarida Xirgu, 67",
+    location: "C/ Margarida Xirgu, 69 · Coastal residence",
+    address: "C/ Margarida Xirgu, 69",
     bedrooms: 4,
     bathrooms: 4,
     area: "356.80 m²",
@@ -289,7 +374,8 @@ export const properties: Property[] = [
       "Un espacio con presencia. Sin ser ostentosa, la casa irradia energía sutil, equilibrio y una sensación inmediata de hogar.",
     amenities: LA_PLANA_AMENITIES,
     gallery: [],
-    // Same street number 67 — shared coordinates
+    floorPlans: PLANS_XIRGU_69,
+    // Carrer de Margarida Xirgu, 69 (aligned with Horizon plot order on street)
     mapLatitude: 41.2406625,
     mapLongitude: 1.7950721,
     imageKitGallery: [
@@ -323,17 +409,17 @@ export const properties: Property[] = [
       "/la-plana-aura-xirgu-69/ai-render-10813888.png",
     ],
   },
-  // 6. La Plana Horizon - Xirgu-69 (XIRGU 69 VISADO.pdf)
+  // 6. La Plana Horizon — Xirgu 97
   {
     id: "6",
     title: "La Plana Horizon",
-    slug: "la-plana-horizon-xirgu-69",
-    price: "On request",
+    slug: "la-plana-horizon-xirgu-97",
+    price: PRICE_EUR_STANDARD,
     category: "house",
-    videoUrl: "https://www.youtube.com/shorts/i_0bsuPLuN0",
-    image: "/la-plana-aura-xirgu-69/4K_Xirgu_69_01.png",
-    location: "C/ Margarida Xirgu, 69 · Horizon views",
-    address: "C/ Margarida Xirgu, 69",
+    videoUrl: "https://www.youtube.com/shorts/vAEMz-9pM5Y",
+    image: LA_PLANA_HORIZON_IMAGEKIT_PATHS[0]!,
+    location: "C/ Margarida Xirgu, 97 · Horizon views",
+    address: "C/ Margarida Xirgu, 97",
     bedrooms: 4,
     bathrooms: 4,
     area: "372.47 m²",
@@ -351,28 +437,19 @@ export const properties: Property[] = [
       "La mirada viaja lejos — y también los pensamientos. Una residencia para quienes buscan perspectiva, libertad y una conexión natural con el horizonte.",
     amenities: LA_PLANA_AMENITIES,
     gallery: [],
-    // Carrer de Margarida Xirgu, 69
+    floorPlans: PLANS_XIRGU_97,
+    // Carrer de Margarida Xirgu, 97 — verify pin if needed
     mapLatitude: 41.2407436,
     mapLongitude: 1.7952669,
-    imageKitGallery: [
-      "/la-plana-aura-xirgu-69/4K_Xirgu_69_01.png",
-      "/la-plana-aura-xirgu-69/4K_Scene 108.png",
-      "/la-plana-aura-xirgu-69/9_4K_Scene 107.png",
-    ],
-    imageKitRenders: [
-      "/la-plana-aura-xirgu-69/4K_Scene 103.png",
-      "/la-plana-aura-xirgu-69/9_4K_Scene 107.png",
-      "/la-plana-aura-xirgu-69/4K_Scene 82.png",
-      "/la-plana-aura-xirgu-69/4K_Xirgu_69_01.png",
-      "/la-plana-aura-xirgu-69/4K_Scene 108.png",
-    ],
+    imageKitGallery: LA_PLANA_HORIZON_IMAGEKIT_PATHS.slice(0, 3),
+    imageKitRenders: [...LA_PLANA_HORIZON_IMAGEKIT_PATHS],
   },
   // 7. La Plana Llum - Xirgu-71 (XIRGU 71 VISADO.pdf)
   {
     id: "7",
     title: "La Plana Llum",
     slug: "la-plana-llum-xirgu-71",
-    price: "On request",
+    price: PRICE_EUR_STANDARD,
     category: "house",
     image: "/la-plana-llum-xirgu-71/4K_Scene 60.png",
     location: "C/ Margarida Xirgu, 71 · Mediterranean light",
@@ -394,6 +471,7 @@ export const properties: Property[] = [
       "La luz mediterránea como elemento arquitectónico. Interior y exterior se fusionan en un diálogo cálido, natural y continuo.",
     amenities: LA_PLANA_AMENITIES,
     gallery: [],
+    floorPlans: PLANS_XIRGU_71,
     // Carrer de Margarida Xirgu, 71
     mapLatitude: 41.2408247,
     mapLongitude: 1.7954618,
@@ -415,7 +493,7 @@ export const properties: Property[] = [
     id: "8",
     title: "La Plana Ponent",
     slug: "la-plana-ponent-xirgu-73",
-    price: "On request",
+    price: PRICE_EUR_STANDARD,
     category: "house",
     videoUrl: "https://www.youtube.com/shorts/mFv2XDVt8j8",
     image: "/la-plana-ponet-xirgu-73/New_4K_Scene 42.png",
@@ -437,6 +515,7 @@ export const properties: Property[] = [
       "La casa de los atardeceres. Tonos cálidos, finales pacíficos del día y una atmósfera que invita a la reflexión y la relajación profunda.",
     amenities: LA_PLANA_AMENITIES,
     gallery: [],
+    floorPlans: PLANS_XIRGU_73,
     // Carrer de Margarida Xirgu, 73
     mapLatitude: 41.2409186,
     mapLongitude: 1.7956862,
@@ -475,7 +554,7 @@ export const properties: Property[] = [
     id: "9",
     title: "La Plana Vista",
     slug: "la-plana-vista-garraf-45",
-    price: "On request",
+    price: PRICE_EUR_STANDARD,
     category: "house",
     videoUrl: "https://www.youtube.com/shorts/dz7vZuDo-Gg",
     image: "/la-plana-vista-garraf-45/4K_Garraf_45_Image.png",
@@ -493,6 +572,7 @@ export const properties: Property[] = [
       "Apertura total. Una residencia que enfatiza las vistas, el espacio y el respiro, ofreciendo una sensación constante de libertad.",
     amenities: LA_PLANA_AMENITIES,
     gallery: [],
+    floorPlans: PLANS_GARAF_45,
     // Carrer d'en Pepe de Garraf, 45 (Cases del Sord, Sitges) — matches “Garraf, 45”
     mapLatitude: 41.2384881,
     mapLongitude: 1.7926503,
@@ -609,16 +689,6 @@ export const faqs: FAQ[] = [
     answer:
       "The project is aimed at clients who value architecture, material quality, privacy, inclusivity, and long-term comfort over speculative or short-term real estate products.",
   },
-];
-
-// =======================
-// STATS (DEVELOPMENT-REALISTIC)
-// =======================
-
-export const stats = [
-  { value: "900 m", label: "Distance to the Sea" },
-  { value: "100%", label: "Architect-Designed Homes" },
-  { value: "Standard", label: "High-End Specifications" },
 ];
 
 // =======================

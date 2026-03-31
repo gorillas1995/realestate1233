@@ -49,7 +49,18 @@ export function HeroSection() {
 
           {/* ================= CONTENT ================= */}
           <div className="absolute inset-0 flex items-center">
-            <div className="px-6 sm:px-10 lg:px-16 max-w-xl">
+            <div className="px-6 sm:px-10 lg:px-16 max-w-xl lg:max-w-2xl">
+              {/* Kicker — project line, wraps on small viewports */}
+              <p
+                className={`text-white/70 text-[0.65rem] sm:text-xs font-semibold tracking-[0.2em] uppercase mb-4 leading-relaxed transition-all duration-1000 delay-100 ${
+                  isLoaded
+                    ? "opacity-100 translate-y-0"
+                    : "opacity-0 translate-y-8"
+                }`}
+              >
+                {t.hero.kicker}
+              </p>
+
               <h1
                 className={`text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold leading-[1.1] mb-5 text-white transition-all duration-1000 delay-200 ${
                   isLoaded
@@ -63,7 +74,7 @@ export function HeroSection() {
               </h1>
 
               <p
-                className={`text-white/80 text-sm sm:text-base lg:text-lg max-w-md mb-7 leading-relaxed transition-all duration-1000 delay-300 ${
+                className={`text-white/80 text-sm sm:text-base lg:text-lg max-w-prose mb-7 leading-relaxed transition-all duration-1000 delay-300 ${
                   isLoaded
                     ? "opacity-100 translate-y-0"
                     : "opacity-0 translate-y-8"

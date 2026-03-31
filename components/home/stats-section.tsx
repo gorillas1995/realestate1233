@@ -1,9 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import Image from "next/image";
 import { ArrowRight } from "lucide-react";
-import { stats } from "@/lib/data";
 import { useEffect, useRef, useState } from "react";
 import { useLanguage } from "@/contexts/language-context";
 
@@ -38,7 +36,7 @@ export function StatsSection() {
             isVisible ? "animate-pop-in" : "opacity-0"
           }`}
         >
-          {stats.map((item, index) => {
+          {t.homeStats.map((item, index) => {
             // Set background and text color according to card index
             let cardBg, cardText;
             if (index === 2) {
@@ -84,7 +82,7 @@ export function StatsSection() {
         >
           <div className="grid grid-cols-1 lg:grid-cols-12">
             {/* TEXT */}
-            <div className="lg:col-span-5 p-8 lg:p-12 flex flex-col justify-center space-y-5">
+            <div className="lg:col-span-8 xl:col-span-7 p-8 lg:p-12 flex flex-col justify-center space-y-5">
               <span className="text-sm font-semibold tracking-[0.25em] uppercase text-white">
                 {t.stats.aboutUs}
               </span>
@@ -93,9 +91,14 @@ export function StatsSection() {
                 {t.stats.heading}
               </h3>
 
-              <p className="text-white leading-relaxed text-sm">
-                {t.stats.description}
-              </p>
+              {t.stats.descriptionParagraphs.map((paragraph, i) => (
+                <p
+                  key={i}
+                  className="text-white leading-relaxed text-sm lg:text-base"
+                >
+                  {paragraph}
+                </p>
+              ))}
 
               <Link
                 href="/listings"

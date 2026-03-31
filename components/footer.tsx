@@ -14,7 +14,9 @@ export function Footer() {
           {/* Brand */}
           <div className="lg:col-span-1">
             <Link href="/" className="flex items-center gap-3 mb-6">
-              <span className="text-xl font-bold tracking-tight">[URBAN]</span>
+              <span className="text-lg sm:text-xl font-bold tracking-tight">
+                {t.footer.brandName}
+              </span>
             </Link>
             <p className="text-muted-foreground text-sm leading-relaxed">
               {t.footer.description}
@@ -91,7 +93,8 @@ export function Footer() {
         {/* Bottom Bar */}
         <div className="mt-16 pt-8 border-t border-border flex flex-col md:flex-row justify-between items-center gap-4">
           <p className="text-muted-foreground text-sm">
-            © {new Date().getFullYear()} Urban Estate. {t.footer.rightsReserved}
+            © {new Date().getFullYear()} {t.footer.copyrightEntity}.{" "}
+            {t.footer.rightsReserved}
           </p>
           <div className="flex flex-wrap items-center justify-center gap-4 md:gap-6">
             <Link

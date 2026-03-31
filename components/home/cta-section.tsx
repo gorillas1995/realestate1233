@@ -49,10 +49,13 @@ export function CTASection() {
           </div>
 
           <div className="absolute inset-0 flex items-center justify-center">
-            <div className="text-center px-6">
-              <h2 className="text-xl md:text-4xl lg:text-5xl font-bold text-white mb-6">
+            <div className="text-center px-6 max-w-4xl mx-auto">
+              <h2 className="text-xl md:text-3xl lg:text-4xl font-bold text-white mb-4 leading-tight">
                 {t.cta.title}
               </h2>
+              <p className="text-white/85 text-sm md:text-base leading-relaxed mb-8 max-w-2xl mx-auto">
+                {t.cta.description}
+              </p>
               <Link
                 href="/contact"
                 className="inline-flex items-center gap-3 px-8 py-4 bg-white text-foreground font-medium tracking-wide rounded-full transition-all duration-300 hover:bg-white/90 hover:gap-4 hover:shadow-xl group"

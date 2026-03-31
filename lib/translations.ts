@@ -15,17 +15,23 @@ export interface Translations {
 
   // Hero Section
   hero: {
+    /** Uppercase site / place line above the headline */
+    kicker: string;
     title: string;
     subtitle: string;
     description: string;
     cta: string;
   };
 
-  // Stats Section
+  /** Homepage metric cards (below hero) */
+  homeStats: { value: string; label: string }[];
+
+  // Stats Section — location band copy below metric cards
   stats: {
     aboutUs: string;
     heading: string;
-    description: string;
+    /** Location narrative — rendered as stacked paragraphs */
+    descriptionParagraphs: string[];
     viewListings: string;
   };
 
@@ -37,25 +43,30 @@ export interface Translations {
     viewListings: string;
   };
 
-  // Categories Section
-  categories: {
+  /** Homepage philosophy — band + intro + pillar cards */
+  homePhilosophy: {
+    bandKicker: string;
+    bandHeading: string;
+    bandBody: string;
+    sectionKicker: string;
     title: string;
-    description: string;
-    aboutUs: string;
-    heading: string;
-    aboutDescription: string;
+    introParagraphs: string[];
+    pillars: { title: string; body: string }[];
   };
 
-  // Testimonials
-  testimonials: {
+  /** Homepage Sitges culture & events (replaces former testimonials strip) */
+  homeTown: {
     label: string;
     title: string;
-    description: string;
+    introParagraphs: string[];
+    events: { name: string; detail: string }[];
+    outro: string;
   };
 
   // CTA Section
   cta: {
     title: string;
+    description: string;
     button: string;
   };
 
@@ -109,6 +120,10 @@ export interface Translations {
   // Footer
   footer: {
     description: string;
+    /** Brand wordmark next to logo area */
+    brandName: string;
+    /** Entity name after © in the bottom bar */
+    copyrightEntity: string;
     quickLinks: string;
     properties: string;
     contact: string;
@@ -166,26 +181,6 @@ export interface Translations {
     /** Short link label on cards */
     exploreDetails: string;
     faq: {
-      title: string;
-      description: string;
-    };
-  };
-
-  // Categories data
-  categoryData: {
-    houses: {
-      title: string;
-      description: string;
-    };
-    interiorDesign: {
-      title: string;
-      description: string;
-    };
-    highEnd: {
-      title: string;
-      description: string;
-    };
-    exclusiveOnly: {
       title: string;
       description: string;
     };
@@ -261,6 +256,9 @@ export interface Translations {
       description: string;
       cta: string;
     };
+    /** Property page video modal when videoPending and no URL yet */
+    videoPendingTitle: string;
+    videoPendingBody: string;
     /** Related / “You may also like” strip on property page */
     relatedProperties: {
       label: string;
@@ -323,42 +321,110 @@ export const translations: Record<Language, Translations> = {
       interiorDesign: "INTERIOR DESIGN",
     },
     hero: {
-      title: "URBAN CONSTRUCTION",
-      subtitle: "FOR CLIENTS",
+      kicker:
+        "SITGES CAPITAL ESTATE · LA PLANA · SITGES · BARCELONA COAST",
+      title: "We don't build units.",
+      subtitle: "We commission homes.",
       description:
-        "The urban Estate construction philosophy prioritizes precision, innovation, and quality. It combines cutting-edge technology with meticulous craftsmanship.",
-      cta: "VIEW LISTINGS",
+        "Ten villas on the hillside of La Plana, each designed by an architect as a singular work — oriented to the sea, shaped by the site, and built for the way you actually choose to live.",
+      cta: "Browse the residences",
     },
+    homeStats: [
+      { value: "35 km", label: "from Barcelona city centre" },
+      { value: "300+", label: "sunny days per year" },
+      { value: "10", label: "villas, each unique" },
+    ],
     stats: {
-      aboutUs: "About Us",
-      heading: "Precision. Innovation. Quality.",
-      description:
-        "We blend cutting-edge technology with meticulous craftsmanship to deliver iconic properties that stand the test of time. Trusted by clients worldwide.",
-      viewListings: "VIEW LISTINGS",
+      aboutUs: "THE LOCATION",
+      heading: "35 minutes from Barcelona. Entirely its own world.",
+      descriptionParagraphs: [
+        "Sitges is not a suburb. It is a town with centuries of accumulated character — a promenade lined with modernist mansions, a historic centre of whitewashed streets and Gothic architecture, 17 beaches, a marina, and a cultural life that operates year-round without interruption.",
+        "Barcelona is 35 kilometres away via direct motorway and rail. Close enough to use. Far enough to forget about.",
+      ],
+      viewListings: "Explore the residences",
     },
     featuredListings: {
-      label: "Featured Listings",
-      title: "Here are some of our featured listings you can view.",
-      description: "To view all of listings, click on the button below.",
+      label: "The residences",
+      title: "Each villa is presented individually.",
+      description:
+        "Browse floor plans, architecture, and specifications for each home across this site.",
       viewListings: "VIEW LISTINGS",
     },
-    categories: {
-      title: "Discover our most beautiful properties in Town",
-      description: "Discover the best and beautiful properties in different categories",
-      aboutUs: "About Us",
-      heading: "Precision. Innovation. Quality.",
-      aboutDescription:
-        "We blend cutting-edge technology with meticulous craftsmanship to deliver iconic properties that stand the test of time. Trusted by clients worldwide.",
+    homePhilosophy: {
+      bandKicker: "THE PHILOSOPHY",
+      bandHeading: "Architecture as identity, not repetition.",
+      bandBody:
+        "Most residential developments begin with a template and work outward. We begin with the plot, the light, the view, and the person — and work from there.",
+      sectionKicker: "La Plana",
+      title: "The result is ten homes, not one project replicated ten times.",
+      introParagraphs: [
+        "Each of the ten villas at La Plana has been conceived independently, with its own architectural character, its own relationship to the Mediterranean, and its own interior logic. They share a hillside and a horizon. Nothing else is assumed.",
+      ],
+      pillars: [
+        {
+          title: "Architect-designed, individually",
+          body: "No two villas share the same floor plan, facade, or spatial sequence. Each is a commission in its own right — resolved at the level of detail that matters.",
+        },
+        {
+          title: "Built to last, not to sell quickly",
+          body: "Materials, systems, and construction standards chosen for the life of the building — not the speed of the sale. Energy performance, durability, and craft in equal measure.",
+        },
+        {
+          title: "Sea views as the premise",
+          body: "Every villa has been positioned and orientated around its relationship to the Mediterranean. The view is not a bonus — it is the starting point of the design.",
+        },
+        {
+          title: "Private, not isolated",
+          body: "La Plana sits within walking distance of Sitges town centre, the promenade, and the beach — while maintaining the calm and privacy of a residential hillside address.",
+        },
+      ],
     },
-    testimonials: {
-      label: "Discover more of our properties",
-      title: "Checkout our reviews",
-      description:
-        "Insights from early buyers, site visitors, and professionals evaluating the architecture, materials, and setting of SITGES CAPITAL Estate",
+    homeTown: {
+      label: "Sitges",
+      title: "A town that is always alive",
+      introParagraphs: [
+        "Sitges does not have a season. It has a calendar.",
+        "For those who find stillness in routine but need culture within reach — Sitges delivers both without compromise. The town's event calendar fills every month of the year with events that draw international audiences and keep the town genuinely, permanently alive.",
+      ],
+      events: [
+        {
+          name: "Sitges Film Festival",
+          detail:
+            "Oscar-qualified. One of the world's top 3 genre festivals. Every October since 1968.",
+        },
+        {
+          name: "Carnival",
+          detail:
+            "300,000+ visitors. The finest carnival in Catalonia. February.",
+        },
+        {
+          name: "Festa de la Verema",
+          detail:
+            "Wine harvest festival. Penedès vineyards begin at Sitges' edge.",
+        },
+        {
+          name: "Corpus & Flower Carpets",
+          detail:
+            "Streets become art. One of the most striking traditions on the Catalan coast.",
+        },
+        {
+          name: "Pride Sitges",
+          detail: "International, open, and celebrated on the beach. June.",
+        },
+        {
+          name: "Vintage Car Rally",
+          detail:
+            "Barcelona to Sitges. Classic cars, cliffside roads, and a finish line on the promenade.",
+        },
+      ],
+      outro:
+        "Complement that with a permanent offer of restaurants, galleries, and beach clubs that operate at a level disproportionate to the town's size — and the picture becomes clear: this is somewhere you will never exhaust.",
     },
     cta: {
-      title: "CHANGE YOUR LIFESTYLE!",
-      button: "REACH OUT TO US",
+      title: "Each villa is presented individually.",
+      description:
+        "Browse the individual projects across this site — floor plans, architecture, and specifications are available for each residence. When you are ready to discuss, we are available for a private appointment at a time that suits you.",
+      button: "Request a private appointment",
     },
     about: {
       title: "ABOUT",
@@ -403,8 +469,9 @@ export const translations: Record<Language, Translations> = {
       },
     },
     footer: {
-      description:
-        "Curating exceptional properties for discerning clients since 1998. Experience luxury real estate redefined.",
+      description: "La Plana · Sitges · Barcelona Coast",
+      brandName: "SITGES CAPITAL ESTATE",
+      copyrightEntity: "Sitges Capital Estate",
       quickLinks: "Quick Links",
       properties: "Properties",
       contact: "Contact",
@@ -456,28 +523,6 @@ export const translations: Record<Language, Translations> = {
       faq: {
         title: "Frequently Asked Questions",
         description: "Check below our most frequently asked questions",
-      },
-    },
-    categoryData: {
-      houses: {
-        title: "HOUSES",
-        description:
-          "Explore architect-designed homes defined by distinctive geometry, zero-threshold living, and seamless indoor-outdoor transitions. Each residence features porcelain stoneware exteriors, motorized sliding glazing, heated pools with linear lighting, and advanced climate systems engineered for exceptional comfort.",
-      },
-      interiorDesign: {
-        title: "INTERIOR DESIGN",
-        description:
-          "Designed for clients who value precision, comfort, and material excellence. These homes integrate underfloor heating, perimeter air-conditioning, CORIAN sanitary finishes, recessed magnetic lighting systems, and fully automated shading for a refined, hotel-level living experience.",
-      },
-      highEnd: {
-        title: "HIGH END",
-        description:
-          "Designed for clients who value precision, comfort, and material excellence. These homes integrate underfloor heating, perimeter air-conditioning, CORIAN sanitary finishes, recessed magnetic lighting systems, and fully automated shading for a refined, hotel-level living experience.",
-      },
-      exclusiveOnly: {
-        title: "EXCLUSIVE ONLY",
-        description:
-          "A limited collection of ultra-exclusive residences offering advanced smart access systems, pivot entrance doors, illuminated glass balustrades, integrated audio, and a fully curated architectural lighting concept — all delivered as standard, not upgrades.",
       },
     },
     philosophies: {
@@ -547,6 +592,9 @@ export const translations: Record<Language, Translations> = {
         description: "Explore photorealistic renders of every room and space. Each image is crafted to reflect the exact materials, lighting, and atmosphere of the finished residence — so you can feel at home before the first key is turned.",
         cta: "View All Renders",
       },
+      videoPendingTitle: "Video coming soon",
+      videoPendingBody:
+        "A new walkthrough for this residence will be linked here shortly. For a private viewing in the meantime, please contact us.",
       relatedProperties: {
         label: "Similar Properties",
         title: "You May Also Like",
@@ -699,42 +747,110 @@ export const translations: Record<Language, Translations> = {
       interiorDesign: "DISEÑO DE INTERIORES",
     },
     hero: {
-      title: "CONSTRUCCIÓN URBANA",
-      subtitle: "PARA CLIENTES",
+      kicker:
+        "SITGES CAPITAL ESTATE · LA PLANA · SITGES · COSTA DE BARCELONA",
+      title: "No construimos unidades.",
+      subtitle: "Encargamos hogares.",
       description:
-        "La filosofía de construcción de Urban Estate prioriza la precisión, la innovación y la calidad. Combina tecnología de vanguardia con artesanía meticulosa.",
-      cta: "VER PROPIEDADES",
+        "Diez villas en la ladera de La Plana, cada una diseñada por un arquitecto como una obra singular — orientada al mar, moldeada por el emplazamiento y construida para la forma en que realmente eliges vivir.",
+      cta: "Ver las residencias",
     },
+    homeStats: [
+      { value: "35 km", label: "desde el centro de Barcelona" },
+      { value: "300+", label: "días de sol al año" },
+      { value: "10", label: "villas, cada una única" },
+    ],
     stats: {
-      aboutUs: "Sobre Nosotros",
-      heading: "Precisión. Innovación. Calidad.",
-      description:
-        "Combinamos tecnología de vanguardia con artesanía meticulosa para entregar propiedades icónicas que resisten el paso del tiempo. Confiado por clientes en todo el mundo.",
-      viewListings: "VER PROPIEDADES",
+      aboutUs: "LA UBICACIÓN",
+      heading: "A 35 minutos de Barcelona. Un mundo totalmente propio.",
+      descriptionParagraphs: [
+        "Sitges no es un suburbio. Es un pueblo con siglos de carácter acumulado — un paseo marítimo bordeado de mansiones modernistas, un casco histórico de calles encaladas y arquitectura gótica, 17 playas, un puerto deportivo y una vida cultural que late todo el año sin interrupción.",
+        "Barcelona dista 35 kilómetros por autopista y ferrocarril directos. Lo bastante cerca para usarla. Lo bastante lejos para olvidarla.",
+      ],
+      viewListings: "Explorar las residencias",
     },
     featuredListings: {
-      label: "Propiedades Destacadas",
-      title: "Aquí están algunas de nuestras propiedades destacadas que puedes ver.",
-      description: "Para ver todas las propiedades, haz clic en el botón de abajo.",
+      label: "Las residencias",
+      title: "Cada villa se presenta de forma individual.",
+      description:
+        "Consulta planos, arquitectura y especificaciones de cada hogar en este sitio.",
       viewListings: "VER PROPIEDADES",
     },
-    categories: {
-      title: "Descubre nuestras propiedades más hermosas en la Ciudad",
-      description: "Descubre las mejores y más hermosas propiedades en diferentes categorías",
-      aboutUs: "Sobre Nosotros",
-      heading: "Precisión. Innovación. Calidad.",
-      aboutDescription:
-        "Combinamos tecnología de vanguardia con artesanía meticulosa para entregar propiedades icónicas que resisten el paso del tiempo. Confiado por clientes en todo el mundo.",
+    homePhilosophy: {
+      bandKicker: "LA FILOSOFÍA",
+      bandHeading: "Arquitectura como identidad, no como repetición.",
+      bandBody:
+        "La mayoría de promociones residenciales parten de una plantilla y avanzan hacia fuera. Nosotros partimos de la parcela, la luz, las vistas y la persona — y construimos desde ahí.",
+      sectionKicker: "La Plana",
+      title: "El resultado son diez hogares, no un proyecto replicado diez veces.",
+      introParagraphs: [
+        "Cada una de las diez villas de La Plana ha sido concebida de forma independiente, con su propio carácter arquitectónico, su propia relación con el Mediterráneo y su propia lógica interior. Comparten una ladera y un horizonte. Nada más se da por sentado.",
+      ],
+      pillars: [
+        {
+          title: "Diseñadas por arquitectos, una a una",
+          body: "Ninguna villa comparte la misma planta, fachada o secuencia espacial. Cada una es un encargo propio — resuelto al nivel de detalle que importa.",
+        },
+        {
+          title: "Construidas para durar, no para vender rápido",
+          body: "Materiales, sistemas y estándares constructivos elegidos para la vida del edificio — no para la velocidad de la venta. Rendimiento energético, durabilidad y oficio a partes iguales.",
+        },
+        {
+          title: "Las vistas al mar como premisa",
+          body: "Cada villa se ha situado y orientado en torno a su relación con el Mediterráneo. La vista no es un extra — es el punto de partida del diseño.",
+        },
+        {
+          title: "Privadas, no aisladas",
+          body: "La Plana queda a poca distancia a pie del centro de Sitges, del paseo marítimo y de la playa — manteniendo la calma y la privacidad de una ladera residencial.",
+        },
+      ],
     },
-    testimonials: {
-      label: "Descubre más de nuestras propiedades",
-      title: "Consulta nuestras reseñas",
-      description:
-        "Perspectivas de compradores iniciales, visitantes del sitio y profesionales que evalúan la arquitectura, materiales y entorno de SITGES CAPITAL Estate",
+    homeTown: {
+      label: "Sitges",
+      title: "Un pueblo que siempre está vivo",
+      introParagraphs: [
+        "Sitges no tiene temporada. Tiene calendario.",
+        "Para quien encuentra quietud en la rutina pero necesita cultura al alcance — Sitges ofrece ambas cosas sin renuncias. El calendario de eventos del pueblo llena todos los meses del año con citas que atraen público internacional y mantienen el lugar genuina y permanentemente vivo.",
+      ],
+      events: [
+        {
+          name: "Festival de Cine de Sitges",
+          detail:
+            "Preclasificatorio para los Oscar. Uno de los tres mejores festivales de género del mundo. Cada octubre desde 1968.",
+        },
+        {
+          name: "Carnaval",
+          detail:
+            "Más de 300.000 visitantes. El carnaval más destacado de Cataluña. Febrero.",
+        },
+        {
+          name: "Festa de la Verema",
+          detail:
+            "Fiesta de la vendimia. Los viñedos del Penedès comienzan al borde de Sitges.",
+        },
+        {
+          name: "Corpus y alfombras florales",
+          detail:
+            "Las calles se convierten en arte. Una de las tradiciones más llamativas de la costa catalana.",
+        },
+        {
+          name: "Pride Sitges",
+          detail: "Internacional, abierto y celebrado en la playa. Junio.",
+        },
+        {
+          name: "Rally de coches de época",
+          detail:
+            "Barcelona a Sitges. Coches clásicos, carreteras sobre el acantilado y meta en el paseo marítimo.",
+        },
+      ],
+      outro:
+        "Complétalo con una oferta permanente de restaurantes, galerías y beach clubs que funcionan a un nivel desproporcionado al tamaño del pueblo — y la imagen queda clara: aquí no te quedarás sin nada por descubrir.",
     },
     cta: {
-      title: "¡CAMBIA TU ESTILO DE VIDA!",
-      button: "CONTÁCTANOS",
+      title: "Cada villa se presenta de forma individual.",
+      description:
+        "Explora en este sitio los proyectos uno a uno — hay planos, arquitectura y especificaciones para cada residencia. Cuando quieras hablarlo, concertamos una cita privada en el momento que te venga bien.",
+      button: "Solicitar cita privada",
     },
     about: {
       title: "NOSOTROS",
@@ -779,8 +895,9 @@ export const translations: Record<Language, Translations> = {
       },
     },
     footer: {
-      description:
-        "Curaduría de propiedades excepcionales para clientes exigentes desde 1998. Experimenta el lujo inmobiliario redefinido.",
+      description: "La Plana · Sitges · Costa de Barcelona",
+      brandName: "SITGES CAPITAL ESTATE",
+      copyrightEntity: "Sitges Capital Estate",
       quickLinks: "Enlaces Rápidos",
       properties: "Propiedades",
       contact: "Contacto",
@@ -832,28 +949,6 @@ export const translations: Record<Language, Translations> = {
       faq: {
         title: "Preguntas Frecuentes",
         description: "Consulta a continuación nuestras preguntas más frecuentes",
-      },
-    },
-    categoryData: {
-      houses: {
-        title: "CASAS",
-        description:
-          "Explora hogares diseñados por arquitectos definidos por geometría distintiva, vida sin umbrales y transiciones perfectas entre interior y exterior. Cada residencia cuenta con exteriores de gres porcelánico, acristalamiento corredizo motorizado, piscinas climatizadas con iluminación lineal y sistemas climáticos avanzados diseñados para un confort excepcional.",
-      },
-      interiorDesign: {
-        title: "DISEÑO DE INTERIORES",
-        description:
-          "Diseñado para clientes que valoran la precisión, la comodidad y la excelencia material. Estos hogares integran calefacción por suelo radiante, aire acondicionado perimetral, acabados sanitarios CORIAN, sistemas de iluminación magnética empotrados y sombreado totalmente automatizado para una experiencia de vida refinada, de nivel hotelero.",
-      },
-      highEnd: {
-        title: "ALTA GAMA",
-        description:
-          "Diseñado para clientes que valoran la precisión, la comodidad y la excelencia material. Estos hogares integran calefacción por suelo radiante, aire acondicionado perimetral, acabados sanitarios CORIAN, sistemas de iluminación magnética empotrados y sombreado totalmente automatizado para una experiencia de vida refinada, de nivel hotelero.",
-      },
-      exclusiveOnly: {
-        title: "SOLO EXCLUSIVO",
-        description:
-          "Una colección limitada de residencias ultraexclusivas que ofrecen sistemas de acceso inteligente avanzados, puertas de entrada pivotantes, barandillas de vidrio iluminadas, audio integrado y un concepto de iluminación arquitectónica totalmente curado, todo entregado como estándar, no como mejoras.",
       },
     },
     philosophies: {
@@ -923,6 +1018,9 @@ export const translations: Record<Language, Translations> = {
         description: "Explora renders fotorrealistas de cada habitación y espacio. Cada imagen refleja los materiales, la iluminación y la atmósfera exactos de la residencia terminada — para que te sientas en casa antes de girar la primera llave.",
         cta: "Ver Todos los Renders",
       },
+      videoPendingTitle: "Vídeo próximamente",
+      videoPendingBody:
+        "En breve enlazaremos un nuevo recorrido de esta residencia. Mientras tanto, para una visita privada, contáctanos.",
       relatedProperties: {
         label: "Propiedades similares",
         title: "También te puede interesar",

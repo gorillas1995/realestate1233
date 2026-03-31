@@ -111,7 +111,7 @@ export function PropertyGallery({ property }: PropertyGalleryProps) {
     },
     {
       key: "video",
-      show: !!videoEmbedSrc,
+      show: Boolean(videoEmbedSrc || property.videoPending),
       icon: Play,
       label: t.property.buttons.video,
       onClick: () => setShowVideo(true),
@@ -478,7 +478,7 @@ export function PropertyGallery({ property }: PropertyGalleryProps) {
         </div>
       )}
 
-      {/* ─── Video (YouTube) Modal — Shorts-friendly 9:16 frame ─── */}
+      {/* ─── Video modal: YouTube embed, or placeholder when videoPending without URL ─── */}
       {showVideo && videoEmbedSrc && (
         <div
           className="fixed inset-0 z-[100] flex items-center justify-center bg-black/95 backdrop-blur-sm"
@@ -510,6 +510,39 @@ export function PropertyGallery({ property }: PropertyGalleryProps) {
               loading="lazy"
               title={`${t.property.buttons.video} — ${property.title}`}
             />
+          </div>
+        </div>
+      )}
+
+      {showVideo && !videoEmbedSrc && property.videoPending && (
+        <div
+          className="fixed inset-0 z-[100] flex items-center justify-center bg-black/95 backdrop-blur-sm px-6"
+          onClick={() => setShowVideo(false)}
+        >
+          <button
+            onClick={(e) => {
+              e.stopPropagation()
+              setShowVideo(false)
+            }}
+            className="absolute top-4 right-4 z-[110] rounded-full border border-white/20 bg-white/10 p-2.5 backdrop-blur-md transition-all duration-300 hover:bg-white/20 md:top-6 md:right-6 md:p-3"
+            aria-label="Close"
+          >
+            <X className="h-6 w-6 text-white md:h-8 md:w-8" />
+          </button>
+
+          <div
+            className="relative z-[105] mx-auto max-w-md rounded-2xl border border-white/20 bg-white/5 p-8 text-center backdrop-blur-md"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-[#428BC7]/30">
+              <Play className="h-7 w-7 text-white" aria-hidden />
+            </div>
+            <h3 className="text-lg font-semibold text-white md:text-xl">
+              {t.property.videoPendingTitle}
+            </h3>
+            <p className="mt-3 text-sm leading-relaxed text-white/80 md:text-base">
+              {t.property.videoPendingBody}
+            </p>
           </div>
         </div>
       )}
