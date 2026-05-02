@@ -35,30 +35,29 @@ export function CTASection() {
           isVisible ? "animate-pop-in" : "opacity-0"
         }`}
       >
-        <div className="relative overflow-hidden rounded-3xl lg:rounded-2xl w-full max-w-7xl mx-auto lg:max-w-none">
-          <div className="relative aspect-[16/6] lg:aspect-[16/3] w-full">
-            <Image
-              src="/img-banner2.avif"
-              alt="Luxury lifestyle"
-              fill
-              className="object-cover"
-              priority={false}
-              sizes="100vw"
-            />
-            <div className="absolute inset-0 bg-black/50" />
-          </div>
+        <div className="relative min-h-112 overflow-hidden rounded-3xl lg:min-h-80 lg:rounded-2xl w-full max-w-7xl mx-auto lg:max-w-none">
+          <Image
+            src="/img-banner2.avif"
+            alt="Luxury lifestyle"
+            fill
+            className="object-cover"
+            priority={false}
+            sizes="100vw"
+          />
+          <div className="absolute inset-0 bg-black/50" />
 
-          <div className="absolute inset-0 flex items-center justify-center">
-            <div className="text-center px-6 max-w-4xl mx-auto">
-              <h2 className="text-xl md:text-3xl lg:text-4xl font-bold text-white mb-4 leading-tight">
+          {/* Use min-height on mobile so long localized copy never clips inside the image panel. */}
+          <div className="relative z-10 flex min-h-112 items-center justify-center px-5 py-10 sm:px-6 lg:min-h-80">
+            <div className="text-center max-w-4xl mx-auto">
+              <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-white mb-4 leading-tight">
                 {t.cta.title}
               </h2>
-              <p className="text-white/85 text-sm md:text-base leading-relaxed mb-8 max-w-2xl mx-auto">
+              <p className="text-white/85 text-sm leading-relaxed mb-7 max-w-2xl mx-auto md:text-base md:mb-8">
                 {t.cta.description}
               </p>
               <Link
                 href="/contact"
-                className="inline-flex items-center gap-3 px-8 py-4 bg-white text-foreground font-medium tracking-wide rounded-full transition-all duration-300 hover:bg-white/90 hover:gap-4 hover:shadow-xl group"
+                className="inline-flex min-h-12 items-center justify-center gap-3 px-6 py-3 bg-white text-foreground font-medium tracking-wide rounded-full transition-all duration-300 hover:bg-white/90 hover:gap-4 hover:shadow-xl group sm:px-8 sm:py-4"
               >
                 {t.cta.button}
                 <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" />

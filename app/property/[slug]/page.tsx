@@ -48,6 +48,7 @@ export default async function PropertyPage({ params }: PropertyPageProps) {
     "la-plana-llum-xirgu-71",
     "la-plana-ponent-xirgu-73",
     "la-plana-vista-garraf-45",
+    "dalmases-31",
   ];
 
   const relatedProperties = relatedSlugs
